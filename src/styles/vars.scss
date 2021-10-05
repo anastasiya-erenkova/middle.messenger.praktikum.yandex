@@ -1,0 +1,16 @@
+$c-black: #000;
+$c-white: #fff;
+
+$c-text-primary: #1e1e1e;
+$c-text-secondary: #999999;
+
+$c-primary: #3369f3;
+$c-border: #eaeaea;
+
+$transition-duration: 0.5s;
+$transition-timing-function: ease;
+$transition: $transition-duration $transition-timing-function;
+
+@function spacing($multiplier) {
+  @return #{4 * $multiplier}px;
+}

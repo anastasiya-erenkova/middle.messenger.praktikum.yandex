@@ -1,0 +1,61 @@
+---
+fields: [
+  {
+    label: "Имя",
+    name: "first_name"
+  },
+  {
+    label: "Фамилия",
+    name: "second_name"
+  },
+  {
+    label: "Логин",
+    name: "login"
+  },
+  {
+    label: "Почта",
+    name: "email",
+    type: "email"
+  },
+  {
+    label: "Телефон",
+    name: "phone"
+  },
+  {
+    label: "Пароль",
+    name: "password",
+    type: "password"
+  },
+  {
+    label: "Пароль (ещё раз)",
+    name: "repeatPassword",
+    type: "password"
+  },
+]
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messenger</title>
+    {{> fonts}}
+    <link rel="stylesheet" href="../main.scss">
+  </head>
+  <body>
+    <div class="card-wrapper">
+      <div class="card">
+        <h2 class="card__title">Регистрация</h2>
+        <div class="card__fields">
+          {{#each fields}}
+            {{> input this }}
+          {{/each}}
+        </div>
+        {{> button text="Зарегистрироваться" class="card__btn" }}
+        <a href="./auth.hbs" class="link card__link">Войти</a>
+      </div>
+    </div>
+  </body>
+</html>

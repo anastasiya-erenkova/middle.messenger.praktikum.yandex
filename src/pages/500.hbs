@@ -1,0 +1,19 @@
+---
+status: 500
+description: Мы уже фиксим
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messenger</title>
+    {{> fonts}}
+    <link rel="stylesheet" href="../main.scss">
+  </head>
+  <body>
+    {{> error status=status description=description }}
+  </body>
+</html>

@@ -1,0 +1,8 @@
+.link {
+  color: $c-primary;
+  transition: color $transition;
+
+  &:hover {
+    color: lighten($c-primary, 8%);
+  }
+}
