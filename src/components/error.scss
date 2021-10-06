@@ -1,7 +1,7 @@
 .error {
   width: 100%;
   min-height: 400px;
-  height: 100vh;
+  height: 99vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,5 +16,9 @@
 
   &__description {
     margin-bottom: spacing(15);
+  }
+
+  &__link {
+    font-size: 14px;
   }
 }

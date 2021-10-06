@@ -1,0 +1,31 @@
+.info-block {
+  display: flex;
+  flex-direction: column;
+  min-width: 510px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: spacing(3) 0;
+
+  &__value {
+    margin-left: spacing(10);
+    color: $c-text-secondary;
+  }
+}
+
+.info-link {
+  padding: spacing(2) 0;
+
+  &__label {
+    display: inline-block;
+    padding: spacing(1) 0;
+  }
+}
+
+.info + .info,
+.info-link + .info-link {
+  border-top: 1px solid $c-border;
+}

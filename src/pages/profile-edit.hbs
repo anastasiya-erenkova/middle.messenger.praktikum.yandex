@@ -1,0 +1,58 @@
+---
+fields: [
+  {
+    label: "Имя",
+    name: "first_name",
+    value: "Иван"
+  },
+  {
+    label: "Фамилия",
+    name: "second_name",
+    value: "Иванов"
+  },
+  {
+    label: "Имя в чате",
+    name: "display_name",
+    value: "Ванюша"
+  },
+  {
+    label: "Логин",
+    name: "login",
+    value: "ivanivanov"
+  },
+  {
+    label: "Почта",
+    name: "email",
+    type: "email",
+    value: "pochta@yandex.ru"
+  },
+  {
+    label: "Телефон",
+    name: "phone",
+    type: "tel",
+    value: "+7(909)9673030"
+  },
+]
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messenger</title>
+    {{> fonts}}
+    <link rel="stylesheet" href="../main.scss">
+  </head>
+  <body>
+    <div class="layout">
+      <div class="fields-group">
+        {{#each fields}}
+          {{> input this }}
+        {{/each}}
+        {{> button text="Сохранить" class="fields-group__btn"}}
+      </div>
+    </div>
+  </body>
+</html>

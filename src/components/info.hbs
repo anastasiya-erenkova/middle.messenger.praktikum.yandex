@@ -1,0 +1,17 @@
+{{#if href}}
+  <div class="info-link">
+    <a href={{ href }} class="info-link__label link {{ class }}">
+      {{ label }}
+    </a>
+  </div>
+{{else}}
+  <div class="info">
+    <span class="info__label">
+      {{ label }}
+    </span>
+    <span class="info__value">
+      {{ value }}
+    </span>
+  </div>
+{{/if }}
+
