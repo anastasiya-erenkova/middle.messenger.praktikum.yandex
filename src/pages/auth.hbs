@@ -17,15 +17,7 @@ fields: [
 {{#extend "page"}}
   {{#content "main"}}
     <main class="layout">
-      <div class="card">
-        <h2 class="card__title">Вход</h2>
-        {{#each fields}}
-          {{> input this }}
-        {{/each}}
-
-        {{> button text="Войти" class="card__btn" }}
-        <a href="./registration.hbs" class="link card__link">Нет аккаунта?</a>
-      </div>
+      {{> card fields=fields cardTitle="Вход" buttonText="Войти" link="./registration.hbs" linkText="Нет аккаунта?" }}
     </main>
   {{/content}}
 {{/extend}}

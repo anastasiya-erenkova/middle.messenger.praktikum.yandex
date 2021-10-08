@@ -1,3 +1,14 @@
-<div class="card">
-  {{{body}}}
+<form class="card">
+  <h2 class="card__title">{{ cardTitle }}</h2>
+  <div class="card__fields">
+    {{#each fields}}
+      {{> input this }}
+    {{/each}}
+  </div>
+
+  {{> button text=buttonText class="card__btn" type="submit" }}
+
+  {{#if link}}
+    <a href="{{ link }}" class="link card__link">{{ linkText }}</a>
+  {{/if}}
 </div>

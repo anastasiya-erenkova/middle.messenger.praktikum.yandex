@@ -40,16 +40,7 @@ fields: [
 {{#extend "page"}}
   {{#content "main"}}
     <main class="layout">
-      <div class="card">
-        <h2 class="card__title">Регистрация</h2>
-        <div class="card__fields">
-          {{#each fields}}
-            {{> input this }}
-          {{/each}}
-        </div>
-        {{> button text="Зарегистрироваться" class="card__btn" }}
-        <a href="./auth.hbs" class="link card__link">Войти</a>
-      </div>
+      {{> card fields=fields cardTitle="Регистрация" buttonText="Зарегистрироваться" link="./auth.hbs" linkText="Войти" }}
     </main>
   {{/content}}
 {{/extend}}

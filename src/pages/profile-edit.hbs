@@ -40,12 +40,7 @@ fields: [
 {{#extend "page"}}
   {{#content "main"}}
     <main  class="layout">
-      <div class="fields-group">
-        {{#each fields}}
-          {{> input this }}
-        {{/each}}
-        {{> button text="Сохранить" class="fields-group__btn"}}
-      </div>
+      {{> card fields=fields cardTitle="Редактирование профиля" buttonText="Сохранить" }}
     </main>
   {{/content}}
 {{/extend}}
