@@ -1,6 +1,6 @@
-@import "styles/vars";
-@import "styles/reset";
-@import "styles/general";
+@import "./vars";
+@import "./reset";
+@import "./general";
 
 @import "components/button";
 @import "components/card";
@@ -9,4 +9,4 @@
 @import "components/error";
 @import "components/info";
 
-@import "styles/profile";
+@import "pages/profile";

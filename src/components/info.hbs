@@ -1,6 +1,6 @@
 {{#if href}}
   <div class="info-link">
-    <a href={{ href }} class="info-link__label link {{ class }}">
+    <a href={{ href }} class="info-link__label link {{#if danger}}link--danger{{/if}}">
       {{ label }}
     </a>
   </div>
