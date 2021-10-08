@@ -1,4 +1,6 @@
 ---
+title: "Профиль"
+stylesheet: '../styles/main.scss'
 name: "Иван"
 avatarUrl: "../static/avatar.svg"
 fields: [
@@ -35,32 +37,21 @@ fields: [
 ]
 ---
 
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messenger</title>
-    {{> fonts}}
-    <link rel="stylesheet" href="../styles/main.scss">
-  </head>
-  <body>
-    <div class="layout">
-      <div class="profile">
-        <div class="profile__avatar" style="background-image: url({{ avatarUrl }})"></div>
-        <h3 class="profile__name">{{ name }}</h3>
-        <div class="info-block">
-          {{#each fields}}
-            {{> info this }}
-          {{/each}}
-        </div>
-        <div class="info-block">
-          {{> info href="./profile-edit.hbs" label="Изменить данные" }}
-          {{> info href="./profile-change-password.hbs" label="Изменить пароль" }}
-          {{> info href="../index.hbs" label="Выйти" danger=true }}
-        </div>
+{{#extend "page"}}
+  {{#content "main"}}
+    <main class="profile layout layout--column">
+      <div class="profile__avatar" style="background-image: url('{{ avatarUrl }}')"></div>
+      <h3 class="profile__name">{{ name }}</h3>
+      <div class="info-block">
+        {{#each fields}}
+          {{> info this }}
+        {{/each}}
       </div>
-    </div>
-  </body>
-</html>
+      <div class="info-block">
+        {{> info href="./profile-edit.hbs" label="Изменить данные" }}
+        {{> info href="./profile-change-password.hbs" label="Изменить пароль" }}
+        {{> info href="../index.hbs" label="Выйти" danger=true }}
+      </div>
+    </main>
+  {{/content}}
+{{/extend}}

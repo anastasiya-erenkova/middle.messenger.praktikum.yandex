@@ -1,4 +1,6 @@
 ---
+title: "Редактирование профиля"
+stylesheet: '../styles/main.scss'
 fields: [
   {
     label: "Имя",
@@ -35,24 +37,15 @@ fields: [
 ]
 ---
 
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messenger</title>
-    {{> fonts}}
-    <link rel="stylesheet" href="../styles/main.scss">
-  </head>
-  <body>
-    <div class="layout">
+{{#extend "page"}}
+  {{#content "main"}}
+    <main  class="layout">
       <div class="fields-group">
         {{#each fields}}
           {{> input this }}
         {{/each}}
         {{> button text="Сохранить" class="fields-group__btn"}}
       </div>
-    </div>
-  </body>
-</html>
+    </main>
+  {{/content}}
+{{/extend}}

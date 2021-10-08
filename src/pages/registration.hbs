@@ -1,4 +1,6 @@
 ---
+title: "Регистрация"
+stylesheet: '../styles/main.scss'
 fields: [
   {
     label: "Имя",
@@ -35,18 +37,9 @@ fields: [
 ]
 ---
 
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messenger</title>
-    {{> fonts}}
-    <link rel="stylesheet" href="../styles/main.scss">
-  </head>
-  <body>
-    <div class="card-wrapper">
+{{#extend "page"}}
+  {{#content "main"}}
+    <main class="layout">
       <div class="card">
         <h2 class="card__title">Регистрация</h2>
         <div class="card__fields">
@@ -57,6 +50,6 @@ fields: [
         {{> button text="Зарегистрироваться" class="card__btn" }}
         <a href="./auth.hbs" class="link card__link">Войти</a>
       </div>
-    </div>
-  </body>
-</html>
+    </main>
+  {{/content}}
+{{/extend}}

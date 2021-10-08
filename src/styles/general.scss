@@ -20,6 +20,11 @@ h3 {
   align-items: center;
   justify-content: center;
   min-height: 99vh;
+  padding: spacing(5);
+
+  &--column {
+    flex-direction: column;
+  }
 }
 
 .fields-group {
@@ -40,17 +45,5 @@ h3 {
   a {
     padding: 5px;
     margin-bottom: 10px;
-  }
-}
-
-.develop {
-  min-height: 99vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  &__description {
-    margin: spacing(7) 0;
   }
 }
