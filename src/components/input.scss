@@ -14,6 +14,11 @@ $labelSize: 9px;
     padding: spacing(2) 0;
     border: none;
     border-bottom: 2px $c-primary solid;
+    transition: border-color $transition;
+
+    &:focus {
+      border-color: darken($c-primary, 10%);
+    }
 
     &:focus,
     &:not(:placeholder-shown) {
