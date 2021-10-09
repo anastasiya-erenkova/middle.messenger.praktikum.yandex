@@ -4,8 +4,10 @@
   "description": "Module 1. Messenger",
   "main": "index.hbs",
   "scripts": {
+    "start": "npm run build && npm run start:express",
+    "start:express": "node ./src/app.js",
     "dev": "parcel src/index.hbs --no-cache",
-    "build": "parcel src/index.hbs --no-cache --public-url ./"
+    "build": "parcel build src/index.hbs --no-minify --no-cache"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,8 @@
     "parcel-plugin-handlebars": "0.4.4",
     "sass": "1.42.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "4.17.1",
+    "path": "0.12.7"
+  }
 }
