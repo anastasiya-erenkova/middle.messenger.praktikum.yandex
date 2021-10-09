@@ -10,7 +10,7 @@
     "start": "npm run build && npm run start:express",
     "start:express": "node ./src/app.js",
     "dev": "parcel src/index.hbs --no-cache",
-    "build": "parcel build src/index.hbs --no-minify --no-cache"
+    "build": "parcel build src/index.hbs --no-cache"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,8 @@
   "homepage": "https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
     "@inventory/parcel-plugin-handlebars": "1.0.0",
+    "@parcel/transformer-image": "2.0.0-rc.0",
+    "@parcel/transformer-sass": "2.0.0-rc.0",
     "handlebars": "4.7.7",
     "parcel": "2.0.0-rc.0",
     "parcel-bundler": "1.12.5",
