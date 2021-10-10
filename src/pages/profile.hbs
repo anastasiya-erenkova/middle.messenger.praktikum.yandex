@@ -1,7 +1,6 @@
 ---
 title: "Профиль"
 stylesheet: '../styles/main.scss'
-name: "Иван"
 avatarUrl: "../static/avatar.svg"
 fields: [
   {
@@ -41,7 +40,7 @@ fields: [
   {{#content "main"}}
     <main class="profile layout layout--column">
       <div class="profile__avatar" style="background-image: url('{{ avatarUrl }}')"></div>
-      <h3 class="profile__name">{{ name }}</h3>
+      <h3 class="profile__name">{{ fields.[0].value }}</h3>
       <div class="info-block">
         {{#each fields}}
           {{> info this }}
