@@ -7,5 +7,5 @@
 
 ## Ссылки
 
-[Макет в Figma](<https://www.figma.com/file/nFQKEa7kf3BoOgIoV8VUcK/Chat-(Copy)?node-id=0%3A1>)
-[Deploy](https://naughty-swartz-228395.netlify.app/)
+- [Макет в Figma](<https://www.figma.com/file/nFQKEa7kf3BoOgIoV8VUcK/Chat-(Copy)?node-id=0%3A1>)
+- [Deploy](https://naughty-swartz-228395.netlify.app/)
