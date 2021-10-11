@@ -9,7 +9,7 @@ mixin card(cardTitle, fields, buttonText, link, linkText)
       each field in fields 
         +input(field)
     
-    +button(buttonText, "card__btn")
+    +button({text: buttonText, btnClassName: "card__btn", type: "submit"})
 
     if link
       a.link.card__link(href=link) #{linkText}
