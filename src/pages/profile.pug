@@ -42,7 +42,7 @@ block main
     ]
 
   main.profile.layout.layout--column
-    .profile__avatar(style="background-image: url('#{avatarUrl}')")
+    .profile__avatar(style=`background-image:url('${avatarUrl}')`)
     h3.profile__name #{fields[0].value}
     .info-block
       each field in fields 
