@@ -1,0 +1,6 @@
+mixin error(status, description)
+
+  .error.layout.layout--column
+    .error__status #{status}
+    h2.error__description #{description}
+    a.link.error__link(href='./chats.pug') Назад к чатам

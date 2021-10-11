@@ -1,0 +1,17 @@
+extends layouts/page.pug
+
+block append head 
+  link(rel="stylesheet", href="./styles/main.scss")
+  title Главная страница
+
+block main
+  main
+    nav.pages-list
+      a(href="./pages/auth.pug") Страница авторизации
+      a(href="./pages/registration.pug") Страница регистрации
+      a(href="./pages/500.pug") Страница ошибки 500
+      a(href="./pages/404.pug") Страница ошибки 404
+      a(href="./pages/chats.pug") Страница чатов
+      a(href="./pages/profile.pug") Страница профиля
+      a(href="./pages/profile-edit.pug") Страница редактирования профиля
+      a(href="./pages/profile-change-password.pug") Страница изменения пароля

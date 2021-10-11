@@ -1,0 +1,13 @@
+extends ../layouts/page.pug
+include ../components/error.pug
+
+block append head 
+  link(rel="stylesheet", href="../styles/main.scss")
+  title Страница не найдена
+
+block main
+  - const status = 404
+  - const description = "Не туда попали"
+
+  main
+    +error(status, description)

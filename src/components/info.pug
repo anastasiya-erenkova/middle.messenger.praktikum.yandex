@@ -1,0 +1,13 @@
+mixin info(options)
+
+  - const { label, value, link, danger } = options
+
+  if link
+    .info-link
+      a.info-link__label.link(href=link class=danger ? 'link--danger' : '' )
+        | #{label}
+
+  else
+    .info
+      span.info__label #{label}
+      span.info__value #{value}

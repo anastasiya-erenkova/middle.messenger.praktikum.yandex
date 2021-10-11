@@ -1,0 +1,15 @@
+include input.pug
+include button.pug
+
+mixin card(cardTitle, fields, buttonText, link, linkText)
+
+  form.card
+    h2.card__title #{cardTitle}
+    .card__fields
+      each field in fields 
+        +input(field)
+    
+    +button(buttonText, "card__btn")
+
+    if link
+      a.link.card__link(href=link) #{linkText}

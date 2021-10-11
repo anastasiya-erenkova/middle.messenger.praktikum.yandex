@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run build && npm run start:express",
     "start:express": "node ./src/app.js",
-    "dev": "parcel src/index.hbs --no-cache",
-    "build": "parcel build src/index.hbs --no-cache"
+    "dev": "parcel src/index.pug --no-cache --open",
+    "build": "parcel build src/index.pug --no-cache --no-optimize"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,10 @@
   },
   "homepage": "https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
-    "@inventory/parcel-plugin-handlebars": "1.0.0",
-    "@parcel/transformer-image": "2.0.0-rc.0",
-    "@parcel/transformer-sass": "2.0.0-rc.0",
-    "handlebars": "4.7.7",
-    "parcel-bundler": "1.12.5",
+    "@parcel/transformer-pug": "^2.0.0-rc.0",
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "parcel": "2.0.0-rc.0",
+    "pug": "3.0.2",
     "sass": "1.42.1"
   },
   "dependencies": {
