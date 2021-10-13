@@ -7,7 +7,7 @@
     "start": "npm run build && npm run start:express",
     "start:express": "node ./src/app.js",
     "dev": "parcel src/index.pug --no-cache --open",
-    "build": "parcel build src/index.pug --no-cache --no-optimize"
+    "build": "./node_modules/.bin/parcel build src/index.pug --no-cache --no-optimize"
   },
   "repository": {
     "type": "git",
