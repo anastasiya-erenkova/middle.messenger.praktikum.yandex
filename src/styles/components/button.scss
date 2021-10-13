@@ -12,4 +12,8 @@
   &:hover {
     background-color: lighten($c-primary, 4%);
   }
+
+  &--auto-top {
+    margin-top: auto;
+  }
 }
