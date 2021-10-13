@@ -1,0 +1,53 @@
+extends ../layouts/page.pug
+include ../components/info.pug
+
+block append head 
+  link(rel="stylesheet", href="../styles/main.scss")
+  title Профиль
+
+block main
+  - const avatarUrl = "../static/avatar.svg"
+  - 
+    const fields = [
+      {
+        label: "Имя",
+        name: "first_name",
+        value: "Иван"
+      },
+      {
+        label: "Фамилия",
+        name: "second_name",
+        value: "Иванов"
+      },
+      {
+        label: "Имя в чате",
+        name: "display_name",
+        value: "Ванюша"
+      },
+      {
+        label: "Логин",
+        name: "login",
+        value: "ivanivanov"
+      },
+      {
+        label: "Почта",
+        name: "email",
+        value: "pochta@yandex.ru"
+      },
+      {
+        label: "Телефон",
+        name: "phone",
+        value: "+7 (909) 967 30 30"
+      },
+    ]
+
+  main.profile.layout.layout--column
+    .profile__avatar(style=`background-image:url('${avatarUrl}')`)
+    h3.profile__name #{fields[0].value}
+    .info-block
+      each field in fields 
+        +info(field)
+    .info-block
+      +info({link: "./profile-edit.pug", label: "Изменить данные"})
+      +info({link: "./profile-change-password.pug", label: "Изменить пароль"})
+      +info({link: "../index.pug", label: "Выйти", danger: true})

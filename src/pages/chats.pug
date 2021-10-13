@@ -1,0 +1,12 @@
+extends ../layouts/page.pug
+
+block append head 
+  link(rel="stylesheet", href="../styles/main.scss")
+  title Список чатов
+
+block main
+  - const status = 500
+  - const description = "Мы уже фиксим"
+
+  main
+    include ../components/develop.pug

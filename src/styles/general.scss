@@ -1,0 +1,40 @@
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: $c-text-primary;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 99vh;
+  padding: spacing(5);
+
+  &--column {
+    flex-direction: column;
+  }
+}
+
+.pages-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+
+  a {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+}

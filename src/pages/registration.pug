@@ -1,0 +1,50 @@
+extends ../layouts/page.pug
+include ../components/card.pug
+
+block append head 
+  link(rel="stylesheet", href="../styles/main.scss")
+  title Регистрация
+
+block main
+  - const cardTitle = "Регистрация"
+  - const buttonText = "Зарегистрироваться"
+  - const link = "./auth.pug"
+  - const linkText = "Войти"
+  - 
+    const fields = [
+      {
+        label: "Имя",
+        name: "first_name"
+      },
+      {
+        label: "Фамилия",
+        name: "second_name"
+      },
+      {
+        label: "Логин",
+        name: "login"
+      },
+      {
+        label: "Почта",
+        name: "email",
+        type: "email"
+      },
+      {
+        label: "Телефон",
+        name: "phone",
+        type: "tel"
+      },
+      {
+        label: "Пароль",
+        name: "password",
+        type: "password"
+      },
+      {
+        label: "Пароль (ещё раз)",
+        name: "repeatPassword",
+        type: "password"
+      },
+    ]
+    
+  main.layout
+    +card(cardTitle, fields, buttonText, link, linkText)

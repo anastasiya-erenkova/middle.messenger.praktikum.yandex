@@ -1,0 +1,46 @@
+$labelSize: 9px;
+
+.input {
+  $this: &;
+
+  position: relative;
+  display: block;
+  margin-top: $labelSize;
+  width: 100%;
+  min-width: 280px;
+
+  &__field {
+    width: 100%;
+    padding: spacing(2) 0;
+    border: none;
+    border-bottom: 2px $c-primary solid;
+    transition: border-color $transition;
+
+    &:focus {
+      border-color: darken($c-primary, 10%);
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      + #{$this} {
+        &__label {
+          top: -(spacing(2));
+          font-size: $labelSize;
+        }
+      }
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: spacing(2);
+    left: 0;
+    transition: font-size 0.2s $transition-timing-function,
+      top 0.2s $transition-timing-function;
+    color: $c-text-secondary;
+  }
+}
+
+.input + .input {
+  margin-top: calc(spacing(4) + $labelSize);
+}
