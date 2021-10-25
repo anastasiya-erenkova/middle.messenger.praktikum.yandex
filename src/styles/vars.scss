@@ -1,13 +1,15 @@
+// Colors
 $c-black: #000;
 $c-white: #fff;
-
-$c-text-primary: #1e1e1e;
-$c-text-secondary: #999999;
-
 $c-primary: #3369f3;
 $c-danger: #ff2f2f;
 $c-border: #eaeaea;
 
+// Text
+$c-text-primary: #1e1e1e;
+$c-text-secondary: #999;
+
+// Transition
 $transition-duration: 0.5s;
 $transition-timing-function: ease;
 $transition: $transition-duration $transition-timing-function;

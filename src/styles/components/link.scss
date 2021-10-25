@@ -3,14 +3,14 @@
   transition: color $transition;
 
   &:hover {
-    color: lighten($c-primary, 8%);
+    color: color.adjust($c-primary, $lightness: 8%);
   }
 
   &--danger {
     color: $c-danger;
 
     &:hover {
-      color: lighten($c-danger, 8%);
+      color: color.adjust($c-danger, $lightness: 8%);
     }
   }
 }

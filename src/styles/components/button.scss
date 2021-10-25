@@ -10,7 +10,7 @@
   transition: background-color $transition;
 
   &:hover {
-    background-color: lighten($c-primary, 4%);
+    background-color: color.adjust($c-primary, $lightness: 4%);
   }
 
   &--auto-top {

@@ -1,11 +1,11 @@
-$labelSize: 9px;
+$label-size: 9px;
 
 .input {
   $this: &;
 
   position: relative;
   display: block;
-  margin-top: $labelSize;
+  margin-top: $label-size;
   width: 100%;
   min-width: 280px;
 
@@ -17,7 +17,7 @@ $labelSize: 9px;
     transition: border-color $transition;
 
     &:focus {
-      border-color: darken($c-primary, 10%);
+      border-color: color.adjust($c-primary, $lightness: -15%);
     }
 
     &:focus,
@@ -25,7 +25,7 @@ $labelSize: 9px;
       + #{$this} {
         &__label {
           top: -(spacing(2));
-          font-size: $labelSize;
+          font-size: $label-size;
         }
       }
     }
@@ -42,5 +42,5 @@ $labelSize: 9px;
 }
 
 .input + .input {
-  margin-top: calc(spacing(4) + $labelSize);
+  margin-top: calc(spacing(4) + $label-size);
 }
