@@ -1,7 +1,0 @@
-mixin input(field)
-
-  - const {name, label, value, type = "text"} = field
-
-  label.input
-    input.input__field(placeholder=" " name=name value=value type=type)
-    span.input__label #{label}

@@ -1,14 +1,16 @@
 import { Component } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import compileTemplate from "./Button.pug";
-import "./Button.scss";
+import compileTemplate from "./Link.pug";
+import "./Link.scss";
 
-export interface Props extends HTMLButtonElement {
+export interface Props {
+	href: string;
 	text: string;
-	autoTop?: boolean;
+	danger?: boolean;
+	className?: string;
 }
 
-export class Button extends Component<Props> {
+export class Link extends Component<Props> {
 	constructor(props: Props) {
 		super(props);
 	}

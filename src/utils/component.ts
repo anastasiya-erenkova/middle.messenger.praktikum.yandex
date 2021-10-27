@@ -1,6 +1,6 @@
 import { EventBus } from "./eventBus";
 
-export class Block<Props extends object> {
+export class Component<Props extends object> {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -22,38 +22,37 @@ export class Block<Props extends object> {
 		this.eventBus = () => eventBus;
 
 		this._registerEvents(eventBus);
-		eventBus.emit(Block.EVENTS.INIT);
+		eventBus.emit(Component.EVENTS.INIT);
 	}
 
 	_registerEvents(eventBus: EventBus) {
-		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-		eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
+		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+		eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
 	init() {
 		this._createTemplateElement();
-		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
 	_componentDidMount() {
 		this.componentDidMount();
-		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	componentDidMount(oldProps?: Props) {}
+	componentDidMount() {}
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
-		console.log("_componentDidUpdate");
 		this.componentDidUpdate(oldProps, newProps);
-		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
 	}
 
 	// Может переопределять пользователь, необязательно трогать
 	componentDidUpdate(oldProps: Props, newProps: Props) {
-		return true;
+		return oldProps !== newProps;
 	}
 
 	setProps = (nextProps: Props) => {
@@ -65,19 +64,21 @@ export class Block<Props extends object> {
 	};
 
 	get element() {
-		// TODO
-		// return this._element;
-		return this._templateElement;
+		return this._element;
+	}
+
+	set element(value) {
+		this._element = value;
 	}
 
 	_render() {
-		console.log("render");
 		const block = this.render();
-
-		console.log(block);
-		this._templateElement.innerHTML = "";
-		this._templateElement.innerHTML = block;
-		this._element = this._templateElement.firstElementChild;
+		if (!this.element) {
+			this.element = block;
+		} else {
+			this.element.replaceWith(block);
+			this.element = block;
+		}
 	}
 
 	// Может переопределять пользователь, необязательно трогать
@@ -99,7 +100,7 @@ export class Block<Props extends object> {
 			},
 			set(target, prop, value) {
 				target[prop as keyof Props] = value;
-				self.eventBus().emit(Block.EVENTS.FLOW_CDU);
+				self.eventBus().emit(Component.EVENTS.FLOW_CDU);
 				return true;
 			},
 			deleteProperty() {
@@ -111,8 +112,7 @@ export class Block<Props extends object> {
 	}
 
 	_createTemplateElement() {
-		this._templateElement = document.createElement("div");
-		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+		this.element = this.render();
 	}
 
 	show() {

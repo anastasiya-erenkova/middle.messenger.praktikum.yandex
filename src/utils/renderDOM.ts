@@ -1,7 +1,10 @@
-import { Block } from "./block";
+import { Component } from "./component";
 
-export function renderDOM(query: string, block: Block<{}>) {
+export function renderDOM(query: string, block: Component<{}>) {
 	const root = document.querySelector(query);
-	root.appendChild(block.getContent());
+	const content = block.getContent();
+	if (root && content) {
+		root.appendChild(content);
+	}
 	return root;
 }
