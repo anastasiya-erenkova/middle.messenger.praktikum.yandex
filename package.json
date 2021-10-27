@@ -9,7 +9,7 @@
     "dev": "parcel src/index.html --no-cache --open",
     "build": "npm run lint && npm run build:parcel",
     "build:parcel": "parcel build src/index.pug --no-cache --no-optimize",
-    "lint": "eslint && stylelint **/*.scss",
+    "lint": "eslint src/**/*.{js,ts} && stylelint **/*.scss",
     "prettier": "prettier --w src/**/*.{scss,ts}"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "parcel": "2.0.0-rc.0",
+    "parcel-transformer-pug-precompile": "1.0.6",
     "prettier": "2.4.1",
     "pug": "3.0.2",
     "sass": "1.42.1",

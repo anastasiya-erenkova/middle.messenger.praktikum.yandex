@@ -1,10 +1,5 @@
 import { EventBus } from "./eventBus";
 
-interface Meta {
-	tagName: string;
-	props: object;
-}
-
 export class Block<Props extends object> {
 	static EVENTS = {
 		INIT: "init",
@@ -13,18 +8,14 @@ export class Block<Props extends object> {
 		FLOW_RENDER: "flow:render",
 	};
 
+	_templateElement: any = null;
 	_element: any = null;
-	_meta: Meta = null;
 
 	props: Props;
 	eventBus: () => EventBus;
 
-	constructor(tagName = "div", props = {} as Props) {
+	constructor(props = {} as Props) {
 		const eventBus = new EventBus();
-		this._meta = {
-			tagName,
-			props,
-		};
 
 		this.props = this._makePropsProxy(props);
 
@@ -41,13 +32,8 @@ export class Block<Props extends object> {
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
-	_createResources() {
-		const { tagName } = this._meta;
-		this._element = this._createDocumentElement(tagName);
-	}
-
 	init() {
-		this._createResources();
+		this._createTemplateElement();
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
@@ -60,6 +46,7 @@ export class Block<Props extends object> {
 	componentDidMount(oldProps?: Props) {}
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
+		console.log("_componentDidUpdate");
 		this.componentDidUpdate(oldProps, newProps);
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
@@ -78,16 +65,19 @@ export class Block<Props extends object> {
 	};
 
 	get element() {
-		return this._element;
+		// TODO
+		// return this._element;
+		return this._templateElement;
 	}
 
 	_render() {
+		console.log("render");
 		const block = this.render();
-		// Этот небезопасный метод для упрощения логики
-		// Используйте шаблонизатор из npm или напишите свой безопасный
-		// Нужно не в строку компилировать (или делать это правильно),
-		// либо сразу в DOM-элементы возвращать из compile DOM-ноду
-		this._element.innerHTML = block;
+
+		console.log(block);
+		this._templateElement.innerHTML = "";
+		this._templateElement.innerHTML = block;
+		this._element = this._templateElement.firstElementChild;
 	}
 
 	// Может переопределять пользователь, необязательно трогать
@@ -103,6 +93,10 @@ export class Block<Props extends object> {
 		const self = this;
 
 		const proxy = new Proxy<Props>(props, {
+			get(target, prop) {
+				const value = target[prop as keyof Props];
+				return typeof value === "function" ? value.bind(target) : value;
+			},
 			set(target, prop, value) {
 				target[prop as keyof Props] = value;
 				self.eventBus().emit(Block.EVENTS.FLOW_CDU);
@@ -116,9 +110,9 @@ export class Block<Props extends object> {
 		return proxy;
 	}
 
-	_createDocumentElement(tagName: string) {
+	_createTemplateElement() {
+		this._templateElement = document.createElement("div");
 		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-		return document.createElement(tagName);
 	}
 
 	show() {
