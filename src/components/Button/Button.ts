@@ -3,7 +3,7 @@ import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Button.pug";
 import "./Button.scss";
 
-export interface Props extends HTMLButtonElement {
+export interface Props extends Partial<HTMLButtonElement> {
 	text: string;
 	autoTop?: boolean;
 }

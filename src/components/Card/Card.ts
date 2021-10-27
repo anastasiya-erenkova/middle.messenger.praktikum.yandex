@@ -2,12 +2,9 @@ import { Component } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Props as ButtonProps } from "../Button";
 import { Props as LinkProps } from "../Link";
+import { Props as InputProps } from "../Input";
 import compileTemplate from "./Card.pug";
 import "./Card.scss";
-
-interface InputProps {
-	label: string;
-}
 
 interface Props {
 	title: string;

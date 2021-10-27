@@ -8,13 +8,12 @@ export class Component<Props extends object> {
 		FLOW_RENDER: "flow:render",
 	};
 
-	_templateElement: any = null;
 	_element: any = null;
 
 	props: Props;
 	eventBus: () => EventBus;
 
-	constructor(props = {} as Props) {
+	constructor(props: Props) {
 		const eventBus = new EventBus();
 
 		this.props = this._makePropsProxy(props);
@@ -33,7 +32,6 @@ export class Component<Props extends object> {
 	}
 
 	init() {
-		this._createTemplateElement();
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
@@ -109,10 +107,6 @@ export class Component<Props extends object> {
 		});
 
 		return proxy;
-	}
-
-	_createTemplateElement() {
-		this.element = this.render();
 	}
 
 	show() {

@@ -3,7 +3,7 @@ import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Input.pug";
 import "./Input.scss";
 
-export interface Props extends HTMLInputElement {
+export interface Props extends Partial<HTMLInputElement> {
 	label: string;
 }
 
