@@ -3,16 +3,16 @@
 
 .title {
   line-height: 1.1;
-}
 
-.title--1 {
-  font-size: 24px;
-}
+  &--1 {
+    font-size: 24px;
+  }
 
-.title--2 {
-  font-size: 20px;
-}
+  &--2 {
+    font-size: 20px;
+  }
 
-.title--3 {
-  font-size: 16px;
+  &--3 {
+    font-size: 16px;
+  }
 }

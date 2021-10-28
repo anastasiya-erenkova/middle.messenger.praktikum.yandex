@@ -74,13 +74,7 @@ const infoBlockAction = new InfoBlock({
 	fields: fieldsAction,
 });
 
-const avatarUrl = new URL(
-	"../../static/avatar.svg",
-	import.meta.url
-).toString();
-
 const avatar = new Avatar({
-	url: avatarUrl,
 	className: "profile__avatar",
 });
 

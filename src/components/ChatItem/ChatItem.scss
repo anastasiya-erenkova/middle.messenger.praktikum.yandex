@@ -1,0 +1,54 @@
+@import "../../styles/vars.scss";
+
+.chat-item {
+  position: relative;
+  display: flex;
+  padding: spacing(3);
+  padding-right: spacing(12);
+  border-bottom: 1px solid $c-border;
+  cursor: pointer;
+
+  &:first-of-type {
+    border-top: 1px solid $c-border;
+  }
+
+  &__avatar {
+    flex-shrink: 0;
+    margin-right: spacing(2);
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: spacing(1);
+  }
+
+  &__description {
+    color: $c-text-secondary;
+    font-size: 12px;
+    word-break: break-word;
+  }
+
+  &__date {
+    position: absolute;
+    right: spacing(3);
+    top: spacing(3);
+    color: $c-text-secondary;
+    font-size: 9px;
+  }
+
+  &__count {
+    position: absolute;
+    right: spacing(3);
+    bottom: spacing(3);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $c-primary;
+    border-radius: 50%;
+    color: $c-white;
+    font-size: 11px;
+  }
+}

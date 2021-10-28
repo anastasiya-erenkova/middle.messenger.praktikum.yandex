@@ -1,0 +1,8 @@
+.chat-item
+  .chat-item__main
+    h4.chat-item__title #{title}
+    p.chat-item__description #{description}
+  span.chat-item__date #{date}
+  
+  if unreadCount
+    span.chat-item__count #{unreadCount}

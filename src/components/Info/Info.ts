@@ -24,9 +24,8 @@ export class InfoBlock extends Component<InfoBlockProps> {
 		const infoBlock = document.createElement("div");
 		infoBlock.classList.add("info-block");
 
-		this.props.fields.forEach((info) => {
-			infoBlock.append(info.getContent());
-		});
+		const fieldsContent = this.props.fields.map((field) => field.getContent());
+		infoBlock.append(...fieldsContent);
 
 		return infoBlock;
 	}

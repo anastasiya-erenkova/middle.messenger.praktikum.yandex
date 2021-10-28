@@ -4,9 +4,14 @@ import compileTemplate from "./Avatar.pug";
 import "./Avatar.scss";
 
 export interface Props extends Partial<HTMLDivElement> {
-	url: string;
+	url?: string;
 	className?: string;
 }
+
+const templateUrl = new URL(
+	"../../static/avatar.svg",
+	import.meta.url
+).toString();
 
 export class Avatar extends Component<Props> {
 	constructor(props: Props) {
@@ -14,6 +19,11 @@ export class Avatar extends Component<Props> {
 	}
 
 	render() {
-		return parserDOM(compileTemplate(this.props));
+		return parserDOM(
+			compileTemplate({
+				...this.props,
+				url: this.props.url ?? templateUrl,
+			})
+		);
 	}
 }

@@ -1,5 +1,9 @@
 import { EventBus } from "./eventBus";
 
+// type Event = {
+// 	[key: string]: Function;
+// };
+
 export class Component<Props extends object> {
 	static EVENTS = {
 		INIT: "init",
@@ -71,6 +75,7 @@ export class Component<Props extends object> {
 
 	_render() {
 		const block = this.render();
+
 		if (!this.element) {
 			this.element = block;
 		} else {
