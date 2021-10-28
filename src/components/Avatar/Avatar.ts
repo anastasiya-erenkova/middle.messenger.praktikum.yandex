@@ -1,16 +1,14 @@
 import { Component } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import compileTemplate from "./Link.pug";
-import "./Link.scss";
+import compileTemplate from "./Avatar.pug";
+import "./Avatar.scss";
 
-export interface Props extends Partial<HTMLAnchorElement> {
-	href: string;
-	text: string;
-	danger?: boolean;
+export interface Props extends Partial<HTMLDivElement> {
+	url: string;
 	className?: string;
 }
 
-export class Link extends Component<Props> {
+export class Avatar extends Component<Props> {
 	constructor(props: Props) {
 		super(props);
 	}

@@ -8,6 +8,7 @@
     "sourceMap": true,
     "target": "es2015",
     "isolatedModules": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "module": "es2020"
   },
 }

@@ -1,15 +1,16 @@
 import { Component } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { Props as ButtonProps } from "../Button";
+import { Button } from "../Button";
 import { Props as LinkProps } from "../Link";
 import { Props as InputProps } from "../Input";
+import { Title } from "../Title";
 import compileTemplate from "./Card.pug";
 import "./Card.scss";
 
 interface Props {
 	title: string;
+	buttonText: string;
 	fields: Component<InputProps>[];
-	button: Component<ButtonProps>;
 	link?: Component<LinkProps>;
 }
 
@@ -22,10 +23,23 @@ export class Card extends Component<Props> {
 		const card = parserDOM(compileTemplate(this.props));
 		const cardField = card?.querySelector(".card__fields");
 
+		const title = new Title({
+			level: 2,
+			title: this.props.title,
+			className: "card__title",
+		});
+
+		cardField?.before(title.getContent());
+
 		const fieldsContent = this.props.fields.map((field) => field.getContent());
 		cardField?.append(...fieldsContent);
 
-		card?.append(this.props.button.getContent());
+		const button = new Button({
+			text: this.props.buttonText,
+			autoTop: true,
+		});
+
+		card?.append(button.getContent());
 
 		if (this.props.link) {
 			card?.append(this.props.link.getContent());

@@ -1,11 +1,9 @@
+@import "../../styles/vars.scss";
+
 .profile {
-  &__avatar {
+  &__avatar.avatar {
     width: 130px;
     height: 130px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    border-radius: 50%;
-    background-color: $c-border;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: spacing(5);

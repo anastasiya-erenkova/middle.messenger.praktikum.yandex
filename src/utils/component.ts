@@ -53,7 +53,7 @@ export class Component<Props extends object> {
 		return oldProps !== newProps;
 	}
 
-	setProps = (nextProps: Props) => {
+	setProps = (nextProps: Partial<Props>) => {
 		if (!nextProps) {
 			return;
 		}
