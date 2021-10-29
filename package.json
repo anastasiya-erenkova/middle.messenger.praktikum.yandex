@@ -9,7 +9,9 @@
     "dev": "parcel src/index.html --no-cache --open",
     "build": "npm run lint && npm run build:parcel",
     "build:parcel": "parcel build src/index.html --no-cache --no-optimize",
-    "lint": "eslint src/**/*.{js,ts} && stylelint **/*.scss",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint src/**/*.{js,ts}",
+    "stylelint": "stylelint **/*.scss",
     "prettier": "prettier --w src/**/*.{scss,ts}"
   },
   "repository": {
