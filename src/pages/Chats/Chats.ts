@@ -1,11 +1,11 @@
 import { renderDOM } from "../../utils/renderDOM";
 import { ChatItem } from "../../components/ChatItem";
-import { ChatList } from "../../components/ChatList";
+import { ChatList, Props as ChatListProps } from "../../components/ChatList";
 import "./Chats.scss";
 
 const chatsData = [
 	{
-		title: "Андрей",
+		title: "Ооооочень длинное название",
 		description: "Изображение",
 		date: "10:49",
 		unreadCount: 2,
@@ -19,16 +19,40 @@ const chatsData = [
 	},
 	{
 		title: "Илья",
-		description: "Друзья, у меня для вас особенный выпуск новостей!(...)",
+		description: "Друзья, у меня для вас особенный особенный выпуск новостей!",
 		date: "15:12",
 		unreadCount: 4,
 	},
 ];
 
-const chats = chatsData.map((chat) => new ChatItem(chat));
+let activeChat: ChatListProps["activeChat"] = null;
+
+const chats = chatsData.map(
+	(chat, index) =>
+		new ChatItem({
+			...chat,
+			active: activeChat === index,
+			events: {
+				click: () => {
+					setActiveChat(index);
+				},
+			},
+		})
+);
 
 const chatList = new ChatList({
 	chats,
+	activeChat,
 });
+
+function setActiveChat(newIndex: ChatListProps["activeChat"]) {
+	activeChat = newIndex;
+
+	chats.forEach((chat, index) => {
+		chat.setProps({
+			active: activeChat === index,
+		});
+	});
+}
 
 renderDOM(".render", chatList);

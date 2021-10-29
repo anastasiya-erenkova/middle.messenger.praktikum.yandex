@@ -1,6 +1,5 @@
 import { Component } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { Title } from "../Title";
 import { Avatar, Props as AvatarProps } from "../Avatar";
 import compileTemplate from "./ChatItem.pug";
 import "./ChatItem.scss";

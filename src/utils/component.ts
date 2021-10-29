@@ -1,10 +1,14 @@
 import { EventBus } from "./eventBus";
 
-// type Event = {
-// 	[key: string]: Function;
-// };
+type Events = {
+	[key: string]: Function;
+};
 
-export class Component<Props extends object> {
+interface ComponentProps {
+	events?: Events;
+}
+
+export class Component<Props extends object & ComponentProps> {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -62,6 +66,8 @@ export class Component<Props extends object> {
 			return;
 		}
 
+		console.log(nextProps);
+
 		Object.assign(this.props, nextProps);
 	};
 
@@ -78,9 +84,12 @@ export class Component<Props extends object> {
 
 		if (!this.element) {
 			this.element = block;
+			this.addEvents();
 		} else {
+			this.removeEvents();
 			this.element.replaceWith(block);
 			this.element = block;
+			this.addEvents();
 		}
 	}
 
@@ -102,8 +111,13 @@ export class Component<Props extends object> {
 				return typeof value === "function" ? value.bind(target) : value;
 			},
 			set(target, prop, value) {
+				const oldValue = target[prop as keyof Props];
+
 				target[prop as keyof Props] = value;
-				self.eventBus().emit(Component.EVENTS.FLOW_CDU);
+
+				if (oldValue !== value) {
+					self.eventBus().emit(Component.EVENTS.FLOW_CDU);
+				}
 				return true;
 			},
 			deleteProperty() {
@@ -112,6 +126,26 @@ export class Component<Props extends object> {
 		});
 
 		return proxy;
+	}
+
+	addEvents() {
+		const { events } = this.props;
+
+		if (events) {
+			Object.keys(events).forEach((eventKey) =>
+				this.element.addEventListener(eventKey, events[eventKey])
+			);
+		}
+	}
+
+	removeEvents() {
+		const { events } = this.props;
+
+		if (events) {
+			Object.keys(events).forEach((eventKey) =>
+				this.element.removeEventListener(eventKey, events[eventKey])
+			);
+		}
 	}
 
 	show() {
