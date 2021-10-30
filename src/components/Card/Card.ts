@@ -14,9 +14,23 @@ interface Props {
 	link?: Component<LinkProps>;
 }
 
+const events = {
+	submit: (e: SubmitEvent) => {
+		e.preventDefault();
+		const formData = new FormData(e.target);
+
+		const consoleObject: any = {};
+
+		for (const [key, value] of formData.entries()) {
+			consoleObject[key] = value;
+		}
+		console.log(consoleObject);
+	},
+};
+
 export class Card extends Component<Props> {
 	constructor(props: Props) {
-		super(props);
+		super({ ...props, events });
 	}
 
 	render() {
@@ -48,3 +62,5 @@ export class Card extends Component<Props> {
 		return card;
 	}
 }
+
+// function getPattern

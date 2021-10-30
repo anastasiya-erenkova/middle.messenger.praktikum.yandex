@@ -1,11 +1,12 @@
 {
-  "extends": ["eslint:recommended","eslint-config-prettier"],
+  "extends": ["eslint:recommended", "eslint-config-prettier", "eslint-config-typescript"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
     "node": true,
     "es2021": true,
-    "amd": true
+    "amd": true,
+    "commonjs": true
   }
 }
