@@ -66,8 +66,6 @@ export class Component<Props extends object & ComponentProps> {
 			return;
 		}
 
-		console.log(nextProps);
-
 		Object.assign(this.props, nextProps);
 	};
 

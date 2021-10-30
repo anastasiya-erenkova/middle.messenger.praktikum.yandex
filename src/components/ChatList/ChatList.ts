@@ -6,7 +6,7 @@ import "./ChatList.scss";
 
 export interface Props extends Partial<HTMLDivElement> {
 	chats: Component<ChatItemProps>[];
-	activeChat?: number | null;
+	activeChatIndex: number | null;
 }
 
 export class ChatList extends Component<Props> {

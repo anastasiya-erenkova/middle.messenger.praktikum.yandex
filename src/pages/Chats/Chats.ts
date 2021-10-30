@@ -1,37 +1,38 @@
 import { renderDOM } from "../../utils/renderDOM";
 import { ChatItem } from "../../components/ChatItem";
 import { ChatList, Props as ChatListProps } from "../../components/ChatList";
+import { Chat } from "../../components/Chat";
 import "./Chats.scss";
 
 const chatsData = [
 	{
 		title: "Ооооочень длинное название",
-		description: "Изображение",
-		date: "10:49",
+		content: "Изображение",
+		time: "10:49",
 		unreadCount: 2,
 	},
 	{
 		avatarUrl:
 			"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMp0NZp_Dsz-ppU26mockuxbwNAlg5fVby8g&usqp=CAU",
 		title: "Киноклуб",
-		description: "Вы: стикер",
-		date: "12:00",
+		content: "Вы: стикер",
+		time: "12:00",
 	},
 	{
 		title: "Илья",
-		description: "Друзья, у меня для вас особенный особенный выпуск новостей!",
-		date: "15:12",
+		content: "Друзья, у меня для вас особенный особенный выпуск новостей!",
+		time: "15:12",
 		unreadCount: 4,
 	},
 ];
 
-let activeChat: ChatListProps["activeChat"] = null;
+let activeChatIndex: ChatListProps["activeChatIndex"] = null;
 
 const chats = chatsData.map(
 	(chat, index) =>
 		new ChatItem({
 			...chat,
-			active: activeChat === index,
+			active: activeChatIndex === index,
 			events: {
 				click: () => {
 					setActiveChat(index);
@@ -42,17 +43,41 @@ const chats = chatsData.map(
 
 const chatList = new ChatList({
 	chats,
-	activeChat,
+	activeChatIndex,
 });
 
-function setActiveChat(newIndex: ChatListProps["activeChat"]) {
-	activeChat = newIndex;
+const chat = new Chat({
+	activeChat: getActiveChat(),
+	messages: [
+		{
+			time: "11:56",
+			content:
+				"Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC",
+		},
+		{
+			time: "12:07",
+			content: "Круто!",
+			isOwner: true,
+		},
+	],
+});
+
+function setActiveChat(newIndex: ChatListProps["activeChatIndex"]) {
+	activeChatIndex = newIndex;
 
 	chats.forEach((chat, index) => {
 		chat.setProps({
-			active: activeChat === index,
+			active: activeChatIndex === index,
 		});
+	});
+
+	chat.setProps({
+		activeChat: getActiveChat(),
 	});
 }
 
-renderDOM(".render", chatList);
+function getActiveChat() {
+	return activeChatIndex !== null ? chats[activeChatIndex] : undefined;
+}
+
+renderDOM(".render", chatList, chat);

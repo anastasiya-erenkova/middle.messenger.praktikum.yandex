@@ -7,8 +7,8 @@ import "./ChatItem.scss";
 export interface Props extends Partial<HTMLDivElement> {
 	avatarUrl: AvatarProps["url"];
 	title: string;
-	description: string;
-	date: string;
+	content: string;
+	time: string;
 	unreadCount?: number;
 	active?: boolean;
 }

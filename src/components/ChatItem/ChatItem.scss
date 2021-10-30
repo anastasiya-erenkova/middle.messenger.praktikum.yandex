@@ -22,7 +22,6 @@
   }
 
   &__main {
-    // flex-grow: 1;
     overflow: hidden;
   }
 
@@ -35,7 +34,7 @@
     text-overflow: ellipsis;
   }
 
-  &__description {
+  &__content {
     color: $c-text-secondary;
     font-size: 12px;
     display: block;
@@ -49,7 +48,7 @@
     text-overflow: ellipsis;
   }
 
-  &__date {
+  &__time {
     position: absolute;
     right: spacing(3);
     top: spacing(3);
