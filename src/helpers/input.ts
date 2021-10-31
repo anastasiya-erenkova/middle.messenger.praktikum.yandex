@@ -1,4 +1,4 @@
-import { Input } from "../components/Input";
+import { Input, Props as InputProps } from "../components/Input";
 
 enum FIELD_NAME {
 	first_name = "first_name",
@@ -59,7 +59,6 @@ const FIELD_PATTERNS = {
 		regex: REGEX.password,
 		errorText: FIELD_ERRORS.password,
 	},
-
 	[FIELD_NAME.newPassword]: {
 		regex: REGEX.password,
 		errorText: FIELD_ERRORS.password,
@@ -71,18 +70,18 @@ const FIELD_PATTERNS = {
 };
 
 export function inputValidation(
-	name: Input["name"],
-	value: Input["value"],
+	name: InputProps["name"],
+	value: InputProps["value"],
 	input: Input
 ) {
-	if (value && name) {
+	if (name) {
 		const isValid = checkValidation(name, value, input);
 
 		input.setProps({
 			invalid: !isValid,
-			errorText: !isValid ? getErrorText(name) : null,
+			errorText: !isValid ? getErrorText(name as FIELD_NAME) : null,
 			// Иначе значение пропадает при перерисовке (валидный/не валидный)
-			value: value,
+			value: value ?? "",
 		});
 	}
 
@@ -90,21 +89,32 @@ export function inputValidation(
 }
 
 export function resetValidation(input: Input) {
-	input.setProps({
-		invalid: false,
-		errorText: null,
-		// Иначе значение пропадает при перерисовке (валидный/не валидный)
-		value: input.props.value,
-	});
+	if (input.props.invalid) {
+		input.setProps({
+			invalid: false,
+			errorText: null,
+		});
+
+		// @TODO исправить типизацию
+		const HTMLInputComponents = input.getContent() as HTMLInputElement;
+		const HTMLInput = HTMLInputComponents.querySelector("input");
+		HTMLInputComponents.focus();
+
+		if (HTMLInput) {
+			HTMLInput.value = "";
+			HTMLInput.value = input.props.value ?? "";
+		}
+	}
 }
 
 function checkValidation(
-	name: Input["name"],
-	value: Input["value"],
+	name: InputProps["name"],
+	value: InputProps["value"],
 	input: Input
 ) {
-	if (name === FIELD_NAME.repeatPassword) {
-		const { elements } = input.element.form;
+	if (name === FIELD_NAME.repeatPassword && input.element) {
+		// @TODO исправить типизацию
+		const { elements } = (input.element as any).form;
 		const compareValue = Object.prototype.hasOwnProperty.call(
 			elements,
 			FIELD_NAME.password
@@ -115,7 +125,7 @@ function checkValidation(
 	}
 
 	return Object.prototype.hasOwnProperty.call(FIELD_PATTERNS, name)
-		? !!value.match(FIELD_PATTERNS[name].regex)
+		? !!value?.match(FIELD_PATTERNS[name as string].regex)
 		: true;
 }
 

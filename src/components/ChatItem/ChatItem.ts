@@ -5,7 +5,7 @@ import compileTemplate from "./ChatItem.pug";
 import "./ChatItem.scss";
 
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
-	avatarUrl: AvatarProps["url"];
+	avatarUrl?: AvatarProps["url"];
 	title: string;
 	content: string;
 	time: string;

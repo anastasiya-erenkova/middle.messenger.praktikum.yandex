@@ -1,11 +1,11 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { Props as ChatItemProps } from "../ChatItem";
+import { ChatItem } from "../ChatItem";
 import compileTemplate from "./ChatList.pug";
 import "./ChatList.scss";
 
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
-	chats: Component<ChatItemProps>[];
+	chats: ChatItem[];
 	activeChatIndex: number | null;
 }
 

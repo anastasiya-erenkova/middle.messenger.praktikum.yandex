@@ -1,6 +1,6 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { Props as LinkProps } from "../Link";
+import { Link } from "../Link";
 import compileTemplate from "./Info.pug";
 import "./Info.scss";
 
@@ -8,11 +8,11 @@ interface InfoProps extends Partial<HTMLDivElement>, ComponentProps {
 	label?: string;
 	value?: string;
 	name?: string;
-	link?: Component<LinkProps>;
+	link?: Link;
 }
 
-interface InfoBlockProps {
-	fields: Component<InfoProps>[];
+interface InfoBlockProps extends Partial<HTMLDivElement>, ComponentProps {
+	fields: Info[];
 }
 
 export class InfoBlock extends Component<InfoBlockProps> {

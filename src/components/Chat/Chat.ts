@@ -1,7 +1,7 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Avatar } from "../Avatar";
-import { Props as ChatItemProps } from "../ChatItem";
+import { ChatItem } from "../ChatItem";
 import { onFormSubmit } from "../../helpers/onFormSubmit";
 import compileTemplate from "./Chat.pug";
 import "./Chat.scss";
@@ -13,7 +13,7 @@ interface Message {
 }
 
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
-	activeChat?: ChatItemProps;
+	activeChat?: ChatItem;
 	messages: Message[];
 }
 
@@ -30,7 +30,7 @@ export class Chat extends Component<Props> {
 		const chat = parserDOM(compileTemplate(this.props));
 
 		const avatar = new Avatar({
-			url: this.props.activeChat?.avatarUrl,
+			url: this.props.activeChat?.props.avatarUrl,
 			className: "chat__avatar",
 		});
 

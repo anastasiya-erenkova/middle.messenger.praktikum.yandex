@@ -1,8 +1,8 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Button } from "../Button";
-import { Props as LinkProps } from "../Link";
-import { Input, Props as InputProps } from "../Input";
+import { Link } from "../Link";
+import { Input } from "../Input";
 import { Title } from "../Title";
 import { onFormSubmit } from "../../helpers/onFormSubmit";
 import compileTemplate from "./Card.pug";
@@ -12,8 +12,8 @@ import { inputValidation, resetValidation } from "../../helpers/input";
 interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	title: string;
 	buttonText: string;
-	fields: Component<InputProps>[];
-	link?: Component<LinkProps>;
+	fields: Input[];
+	link?: Link;
 }
 
 export class Card extends Component<Props> {
@@ -22,8 +22,7 @@ export class Card extends Component<Props> {
 			submit(e: SubmitEvent) {
 				e.preventDefault();
 				props.fields.forEach((field) => {
-					// @TODO исправить типизацию
-					inputValidation(field.props.name, field.props.value, field as Input);
+					inputValidation(field.props.name, field.props.value, field);
 				});
 
 				if (props.fields.every((element) => !element.props.invalid)) {
@@ -50,7 +49,12 @@ export class Card extends Component<Props> {
 			field.setProps({
 				events: {
 					blur(e) {
-						inputValidation(e.target.name, e.target.value, field);
+						// @TODO исправить типизацию
+						inputValidation(
+							(e.target as HTMLInputElement).name,
+							(e.target as HTMLInputElement).value,
+							field
+						);
 					},
 					focus() {
 						resetValidation(field);
