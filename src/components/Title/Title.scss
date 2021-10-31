@@ -1,0 +1,18 @@
+@use "sass:color";
+@import "../../styles/vars";
+
+.title {
+  line-height: 1.1;
+
+  &--1 {
+    font-size: 24px;
+  }
+
+  &--2 {
+    font-size: 20px;
+  }
+
+  &--3 {
+    font-size: 16px;
+  }
+}

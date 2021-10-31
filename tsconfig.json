@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "target": "es2015",
+    "moduleResolution": "node",
+    "module": "es2020"
+  },
+  "exclude": ["src/**/*.pug"]
+}

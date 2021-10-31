@@ -6,8 +6,13 @@
   "scripts": {
     "start": "npm run build && npm run start:express",
     "start:express": "node ./src/app.js",
-    "dev": "parcel src/index.pug --no-cache --open",
-    "build": "./node_modules/.bin/parcel build src/index.pug --no-cache --no-optimize"
+    "dev": "parcel src/index.html --no-cache --open",
+    "build": "npm run lint && npm run build:parcel",
+    "build:parcel": "parcel build src/index.html --no-cache --no-optimize",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint src/**/*.{js,ts}",
+    "stylelint": "stylelint **/*.scss",
+    "prettier": "prettier --w src/**/*.{scss,ts}"
   },
   "repository": {
     "type": "git",
@@ -23,9 +28,20 @@
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.0-rc.0",
     "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "@typescript-eslint/eslint-plugin": "5.1.0",
+    "@typescript-eslint/parser": "5.1.0",
+    "eslint": "8.1.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-typescript": "3.0.0",
     "parcel": "2.0.0-rc.0",
+    "parcel-transformer-pug-precompile": "1.0.6",
+    "prettier": "2.4.1",
     "pug": "3.0.2",
-    "sass": "1.42.1"
+    "sass": "1.42.1",
+    "stylelint": "14.0.0",
+    "stylelint-config-prettier": "9.0.3",
+    "stylelint-config-standard-scss": "2.0.0",
+    "typescript": "4.4.4"
   },
   "dependencies": {
     "express": "4.17.1",

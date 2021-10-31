@@ -1,0 +1,19 @@
+@use "sass:color";
+@import "../../styles/vars";
+
+.link {
+  color: $c-primary;
+  transition: color $transition;
+
+  &:hover {
+    color: color.adjust($c-primary, $lightness: 8%);
+  }
+
+  &--danger {
+    color: $c-danger;
+
+    &:hover {
+      color: color.adjust($c-danger, $lightness: 8%);
+    }
+  }
+}

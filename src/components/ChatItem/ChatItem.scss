@@ -1,0 +1,74 @@
+@import "../../styles/vars";
+
+.chat-item {
+  position: relative;
+  display: flex;
+  padding: spacing(3);
+  padding-right: spacing(12);
+  border-bottom: 1px solid $c-border;
+  cursor: pointer;
+
+  &:first-of-type {
+    border-top: 1px solid $c-border;
+  }
+
+  &.active {
+    background-color: $c-blue-light;
+  }
+
+  &__avatar {
+    flex-shrink: 0;
+    margin-right: spacing(2);
+  }
+
+  &__main {
+    overflow: hidden;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: spacing(1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__content {
+    color: $c-text-secondary;
+    font-size: 12px;
+    display: block;
+    /* stylelint-disable value-no-vendor-prefix */
+    display: -webkit-box;
+    max-width: 100%;
+    height: 25px;
+    line-height: 1;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__time {
+    position: absolute;
+    right: spacing(3);
+    top: spacing(3);
+    color: $c-text-secondary;
+    font-size: 9px;
+  }
+
+  &__count {
+    position: absolute;
+    right: spacing(3);
+    bottom: spacing(3);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $c-primary;
+    border-radius: 50%;
+    color: $c-white;
+    font-size: 11px;
+  }
+}

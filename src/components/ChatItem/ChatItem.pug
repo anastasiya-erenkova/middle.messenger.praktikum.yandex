@@ -1,0 +1,8 @@
+.chat-item(class=active ? 'active' : '')
+  .chat-item__main
+    h4.chat-item__title #{title}
+    p.chat-item__content #{content}
+  span.chat-item__time #{time}
+  
+  if unreadCount
+    span.chat-item__count #{unreadCount}
