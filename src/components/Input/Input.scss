@@ -1,6 +1,5 @@
 @use "sass:color";
 @import "../../styles/vars";
-
 $label-size: 9px;
 
 .input {
@@ -32,6 +31,10 @@ $label-size: 9px;
         }
       }
     }
+
+    &[invalid] {
+      border-color: $c-danger;
+    }
   }
 
   &__label {
@@ -41,6 +44,12 @@ $label-size: 9px;
     transition: font-size 0.2s $transition-timing-function,
       top 0.2s $transition-timing-function;
     color: $c-text-secondary;
+  }
+
+  &__error {
+    margin-top: spacing(1);
+    font-size: 9px;
+    color: $c-danger;
   }
 }
 

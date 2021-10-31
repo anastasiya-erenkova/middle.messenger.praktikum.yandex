@@ -1,9 +1,9 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Button.pug";
 import "./Button.scss";
 
-export interface Props extends Partial<HTMLButtonElement> {
+export interface Props extends Partial<HTMLButtonElement>, ComponentProps {
 	text: string;
 	autoTop?: boolean;
 }

@@ -1,10 +1,10 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Link } from "../Link";
 import compileTemplate from "./Error.pug";
 import "./Error.scss";
 
-interface Props {
+interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	status: number;
 	description: string;
 }

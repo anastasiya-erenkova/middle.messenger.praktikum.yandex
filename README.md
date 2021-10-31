@@ -9,7 +9,9 @@
 - `npm run dev` — запуск режима разработчика,
 - `npm run build` — сборка проекта с проверкой кода,
 - `npm run build:parcel` — сборка проекта,
-- `npm run lint` — проверка анализаторами кода,
+- `npm run lint` — проверка анализаторами кода (eslint и stylelint),
+- `npm run eslint` — проверка eslint,
+- `npm run stylelint` — проверка stylelint,
 - `npm run prettier` — исправление кода форматтером.
 
 ## Ссылки

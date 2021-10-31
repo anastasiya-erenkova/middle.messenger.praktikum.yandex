@@ -1,9 +1,9 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Avatar.pug";
 import "./Avatar.scss";
 
-export interface Props extends Partial<HTMLDivElement> {
+export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	url?: string;
 	className?: string;
 }

@@ -38,6 +38,7 @@
     color: $c-text-secondary;
     font-size: 12px;
     display: block;
+    /* stylelint-disable value-no-vendor-prefix */
     display: -webkit-box;
     max-width: 100%;
     height: 25px;

@@ -1,3 +1,5 @@
+import { ObjectExtension } from "./objectExtension";
+
 enum METHODS {
 	GET = "GET",
 	POST = "POST",
@@ -5,60 +7,66 @@ enum METHODS {
 	DELETE = "DELETE",
 }
 
+type Headers = {
+	[key: string]: string;
+};
+
 type Options = {
 	method: string;
-	data?: any;
-	headers?: any;
+	data?: object;
+	headers?: Headers;
 	timeout?: number;
 };
 
-function queryStringify(data: any) {
-	return `?${Object.keys(data)
-		.map((key) => `${key}=${data[key].toString()}`)
-		.join("&")}`;
+function queryStringify(data: Options["data"]) {
+	return data
+		? `?${ObjectExtension.keys(data)
+				.map((key) => `${key}=${data[key]}`)
+				.join("&")}`
+		: "";
 }
 
 export class HTTPTransport {
-	get = <TResponse>(url: string, options: Options) => {
+	get = (url: string, options: Options) => {
 		const normalizeUrl = options.data
 			? `${url}${queryStringify(options.data)}`
 			: url;
-		return this.request<TResponse>(
+		return this.request(
 			normalizeUrl,
 			{ ...options, method: METHODS.GET },
 			options.timeout
 		);
 	};
 
-	put = <TResponse>(url: string, options: Options) => {
-		return this.request<TResponse>(
+	put = (url: string, options: Options) => {
+		return this.request(
 			url,
 			{ ...options, method: METHODS.PUT },
 			options.timeout
 		);
 	};
 
-	post = <TResponse>(url: string, options: Options) => {
-		return this.request<TResponse>(
+	post = (url: string, options: Options) => {
+		return this.request(
 			url,
 			{ ...options, method: METHODS.POST },
 			options.timeout
 		);
 	};
 
-	delete = <TResponse>(url: string, options: Options) => {
-		return this.request<TResponse>(
+	delete = (url: string, options: Options) => {
+		return this.request(
 			url,
 			{ ...options, method: METHODS.DELETE },
 			options.timeout
 		);
 	};
 
-	request = <TResponse>(
+	request = (
 		url: string,
 		options: Options = { method: "GET" },
 		timeout = 5000
-	): Promise<TResponse> => {
+	): Promise<XMLHttpRequest> => {
 		const { method, data, headers } = options;
 
 		return new Promise((resolve, reject) => {

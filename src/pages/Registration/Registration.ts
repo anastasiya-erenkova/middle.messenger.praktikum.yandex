@@ -7,7 +7,6 @@ const fieldsData = [
 	{
 		label: "Имя",
 		name: "first_name",
-		pattern: "[А-Яа-яЁё]",
 	},
 	{
 		label: "Фамилия",

@@ -1,5 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ListenerArgs = any;
+type Listener = (...args: ListenerArgs) => void;
+
 interface Listeners {
-	[key: string]: Function[];
+	[key: string]: Listener[];
 }
 
 export class EventBus {
@@ -9,7 +13,7 @@ export class EventBus {
 		this.listeners = {};
 	}
 
-	on(event: string, callback: Function) {
+	on(event: string, callback: Listener) {
 		if (!this.listeners[event]) {
 			this.listeners[event] = [];
 		}
@@ -17,7 +21,7 @@ export class EventBus {
 		this.listeners[event].push(callback);
 	}
 
-	off(event: string, callback: Function) {
+	off(event: string, callback: Listener) {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}
@@ -27,7 +31,7 @@ export class EventBus {
 		);
 	}
 
-	emit(event: string, ...args: any) {
+	emit(event: string, ...args: ListenerArgs) {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}

@@ -1,3 +1,6 @@
 label.input
-  input.input__field(placeholder=" " name=name value=value type=type pattern=pattern)
+  input.input__field(placeholder=" " name=name value=value type=type invalid=invalid required) 
   span.input__label #{label}
+  
+  if errorText 
+    span.input__error #{errorText}

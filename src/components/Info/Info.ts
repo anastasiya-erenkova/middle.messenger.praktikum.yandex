@@ -1,10 +1,10 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Props as LinkProps } from "../Link";
 import compileTemplate from "./Info.pug";
 import "./Info.scss";
 
-interface InfoProps {
+interface InfoProps extends Partial<HTMLDivElement>, ComponentProps {
 	label?: string;
 	value?: string;
 	name?: string;

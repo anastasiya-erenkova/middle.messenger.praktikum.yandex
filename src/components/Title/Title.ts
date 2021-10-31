@@ -1,9 +1,9 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Title.pug";
 import "./Title.scss";
 
-export interface Props extends Partial<HTMLHeadingElement> {
+export interface Props extends Partial<HTMLHeadingElement>, ComponentProps {
 	title: string;
 	level?: number;
 	className?: string;

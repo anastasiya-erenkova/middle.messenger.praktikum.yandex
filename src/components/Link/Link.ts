@@ -1,9 +1,9 @@
-import { Component } from "../../utils/component";
+import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Link.pug";
 import "./Link.scss";
 
-export interface Props extends Partial<HTMLAnchorElement> {
+export interface Props extends Partial<HTMLAnchorElement>, ComponentProps {
 	href: string;
 	text: string;
 	danger?: boolean;

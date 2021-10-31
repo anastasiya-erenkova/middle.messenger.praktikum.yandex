@@ -1,14 +1,14 @@
 import { EventBus } from "./eventBus";
 
 type Events = {
-	[key: string]: Function;
+	[key: string]: (e: Event) => void;
 };
 
-interface ComponentProps {
+export interface ComponentProps {
 	events?: Events;
 }
 
-export class Component<Props extends object & ComponentProps> {
+export abstract class Component<Props extends ComponentProps> {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -16,7 +16,8 @@ export class Component<Props extends object & ComponentProps> {
 		FLOW_RENDER: "flow:render",
 	};
 
-	_element: any = null;
+	_element: HTMLElement | null = null;
+	abstract render(): HTMLElement | null;
 
 	props: Props;
 	eventBus: () => EventBus;
@@ -49,7 +50,9 @@ export class Component<Props extends object & ComponentProps> {
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	componentDidMount() {}
+	componentDidMount() {
+		return;
+	}
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
 		this.componentDidUpdate(oldProps, newProps);
@@ -83,7 +86,7 @@ export class Component<Props extends object & ComponentProps> {
 		if (!this.element) {
 			this.element = block;
 			this.addEvents();
-		} else {
+		} else if (block) {
 			this.removeEvents();
 			this.element.replaceWith(block);
 			this.element = block;
@@ -91,34 +94,25 @@ export class Component<Props extends object & ComponentProps> {
 		}
 	}
 
-	// Может переопределять пользователь, необязательно трогать
-	render() {}
-
 	getContent() {
-		return this.element;
+		return this.element as Node;
 	}
 
 	_makePropsProxy(props: Props) {
-		// Можно и так передать this
-		// Такой способ больше не применяется с приходом ES6+
-		const self = this;
-
 		const proxy = new Proxy<Props>(props, {
-			get(target, prop) {
+			get: (target, prop) => {
 				const value = target[prop as keyof Props];
 				return typeof value === "function" ? value.bind(target) : value;
 			},
-			set(target, prop, value) {
+			set: (target, prop, value) => {
 				const oldValue = target[prop as keyof Props];
-
 				target[prop as keyof Props] = value;
-
 				if (oldValue !== value) {
-					self.eventBus().emit(Component.EVENTS.FLOW_CDU);
+					this.eventBus().emit(Component.EVENTS.FLOW_CDU);
 				}
 				return true;
 			},
-			deleteProperty() {
+			deleteProperty: () => {
 				throw new Error("Нет доступа");
 			},
 		});
@@ -131,7 +125,7 @@ export class Component<Props extends object & ComponentProps> {
 
 		if (events) {
 			Object.keys(events).forEach((eventKey) =>
-				this.element.addEventListener(eventKey, events[eventKey])
+				this.element?.addEventListener(eventKey, events[eventKey], true)
 			);
 		}
 	}
@@ -141,16 +135,22 @@ export class Component<Props extends object & ComponentProps> {
 
 		if (events) {
 			Object.keys(events).forEach((eventKey) =>
-				this.element.removeEventListener(eventKey, events[eventKey])
+				this.element?.removeEventListener(eventKey, events[eventKey], true)
 			);
 		}
 	}
 
 	show() {
-		this.getContent().style.display = "block";
+		const content = this.getContent() as HTMLElement;
+		if (content) {
+			content.style.display = "block";
+		}
 	}
 
 	hide() {
-		this.getContent().style.display = "none";
+		const content = this.getContent() as HTMLElement;
+		if (content) {
+			content.style.display = "none";
+		}
 	}
 }
