@@ -58,6 +58,15 @@
     align-items: center;
     justify-content: center;
     margin-left: spacing(3);
+
+    &::after {
+      content: url("../../static/arrow-right.svg");
+      transition: transform $transition;
+    }
+
+    &:hover::after {
+      transform: translateX(1px);
+    }
   }
 }
 

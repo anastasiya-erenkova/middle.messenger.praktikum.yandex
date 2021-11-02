@@ -8,6 +8,7 @@ export interface ComponentProps {
 	events?: Events;
 }
 
+// @TODO добавить рендер дочерних компонентов, для возможности использования родительского шаблона для вставки этих компонентов
 export abstract class Component<Props extends ComponentProps> {
 	static EVENTS = {
 		INIT: "init",
