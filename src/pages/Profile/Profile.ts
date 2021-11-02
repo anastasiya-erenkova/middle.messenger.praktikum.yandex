@@ -1,7 +1,8 @@
 import { renderDOM } from "../../utils/renderDOM";
 import { Avatar } from "../../components/Avatar";
 import { Link } from "../../components/Link";
-import { Info, InfoBlock } from "../../components/Info";
+import { Info } from "../../components/Info";
+import { InfoBlock } from "../../components/InfoBlock";
 import { Title } from "../../components/Title";
 import "./Profile.scss";
 

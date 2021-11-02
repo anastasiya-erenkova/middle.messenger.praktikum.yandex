@@ -8,7 +8,7 @@ export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	className?: string;
 }
 
-const templateUrl = new URL(
+const DEFAULT_AVATAR_URL = new URL(
 	"../../static/avatar.svg",
 	import.meta.url
 ).toString();
@@ -22,7 +22,7 @@ export class Avatar extends Component<Props> {
 		return parserDOM(
 			compileTemplate({
 				...this.props,
-				url: this.props.url ?? templateUrl,
+				url: this.props.url ?? DEFAULT_AVATAR_URL,
 			})
 		);
 	}

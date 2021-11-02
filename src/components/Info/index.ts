@@ -1,1 +1,1 @@
-export { InfoBlock, Info } from "./Info";
+export { Info } from "./Info";

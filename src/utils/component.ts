@@ -20,17 +20,15 @@ export abstract class Component<Props extends ComponentProps> {
 	abstract render(): HTMLElement | null;
 
 	props: Props;
-	eventBus: () => EventBus;
+	eventBus: EventBus;
 
 	constructor(props: Props) {
-		const eventBus = new EventBus();
-
 		this.props = this._makePropsProxy(props);
 
-		this.eventBus = () => eventBus;
+		this.eventBus = new EventBus();
 
-		this._registerEvents(eventBus);
-		eventBus.emit(Component.EVENTS.INIT);
+		this._registerEvents(this.eventBus);
+		this.eventBus.emit(Component.EVENTS.INIT);
 	}
 
 	_registerEvents(eventBus: EventBus) {
@@ -41,12 +39,12 @@ export abstract class Component<Props extends ComponentProps> {
 	}
 
 	init() {
-		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
+		this.eventBus.emit(Component.EVENTS.FLOW_CDM);
 	}
 
 	_componentDidMount() {
 		this.componentDidMount();
-		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
+		this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
 	}
 
 	// Может переопределять пользователь, необязательно трогать
@@ -56,7 +54,7 @@ export abstract class Component<Props extends ComponentProps> {
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
 		this.componentDidUpdate(oldProps, newProps);
-		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
+		this.eventBus.emit(Component.EVENTS.FLOW_RENDER);
 	}
 
 	// Может переопределять пользователь, необязательно трогать
@@ -108,7 +106,7 @@ export abstract class Component<Props extends ComponentProps> {
 				const oldValue = target[prop as keyof Props];
 				target[prop as keyof Props] = value;
 				if (oldValue !== value) {
-					this.eventBus().emit(Component.EVENTS.FLOW_CDU);
+					this.eventBus.emit(Component.EVENTS.FLOW_CDU);
 				}
 				return true;
 			},
