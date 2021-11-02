@@ -8,7 +8,7 @@
     "start:express": "node ./src/app.js",
     "dev": "parcel src/index.html --no-cache --open",
     "build": "npm run lint && npm run build:parcel",
-    "build:parcel": "parcel build src/index.html --no-cache --no-optimize",
+    "build:parcel": "parcel build src/index.html --no-cache --no-scope-hoist --no-optimize",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint src/**/*.{js,ts}",
     "stylelint": "stylelint **/*.scss",
