@@ -46,6 +46,7 @@ export class Card extends Component<Props> {
 
 		cardField?.before(title.getContent());
 
+		// @TODO перенести установку events в компонент Input
 		this.props.fields.forEach((field) => {
 			field.setProps({
 				events: {
