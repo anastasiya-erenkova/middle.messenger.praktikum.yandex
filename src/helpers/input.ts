@@ -1,6 +1,6 @@
-import { Input, Props as InputProps } from "../components/Input";
+import { Props as InputProps } from "../components/Input";
 
-enum FIELD_NAME {
+export enum FIELD_NAME {
 	first_name = "first_name",
 	second_name = "second_name",
 	login = "login",
@@ -69,52 +69,13 @@ const FIELD_PATTERNS = {
 	},
 };
 
-export function inputValidation(
+export function checkValidation(
 	name: InputProps["name"],
 	value: InputProps["value"],
-	input: Input
+	elements?: HTMLFormElement["elements"]
 ) {
-	if (name) {
-		const isValid = checkValidation(name, value, input);
-
-		input.setProps({
-			invalid: !isValid,
-			errorText: !isValid ? getErrorText(name as FIELD_NAME) : null,
-			// Иначе значение пропадает при перерисовке (валидный/не валидный)
-			value: value ?? "",
-		});
-	}
-
-	// @TODO добавить проверку валидации у поля дублирущего пароль, при изменении самого пароля
-}
-
-export function resetValidation(input: Input) {
-	if (input.props.invalid) {
-		input.setProps({
-			invalid: false,
-			errorText: null,
-		});
-
+	if (name === FIELD_NAME.repeatPassword && elements) {
 		// @TODO исправить типизацию
-		const HTMLInputComponents = input.getContent() as HTMLInputElement;
-		const HTMLInput = HTMLInputComponents.querySelector("input");
-		HTMLInputComponents.focus();
-
-		if (HTMLInput) {
-			HTMLInput.value = "";
-			HTMLInput.value = input.props.value ?? "";
-		}
-	}
-}
-
-function checkValidation(
-	name: InputProps["name"],
-	value: InputProps["value"],
-	input: Input
-) {
-	if (name === FIELD_NAME.repeatPassword && input.element) {
-		// @TODO исправить типизацию
-		const { elements } = (input.element as any).form;
 		const compareValue = Object.prototype.hasOwnProperty.call(
 			elements,
 			FIELD_NAME.password
@@ -129,7 +90,7 @@ function checkValidation(
 		: true;
 }
 
-function getErrorText(name: FIELD_NAME) {
+export function getErrorText(name: FIELD_NAME) {
 	if (name === FIELD_NAME.repeatPassword) {
 		return "Пароли не совпадают";
 	}

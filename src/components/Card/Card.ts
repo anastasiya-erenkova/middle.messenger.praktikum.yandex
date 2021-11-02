@@ -7,7 +7,7 @@ import { Title } from "../Title";
 import { onFormSubmit } from "../../helpers/onFormSubmit";
 import compileTemplate from "./Card.pug";
 import "./Card.scss";
-import { inputValidation, resetValidation } from "../../helpers/input";
+import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
 
 interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	title: string;
@@ -22,7 +22,8 @@ export class Card extends Component<Props> {
 			submit(e: SubmitEvent) {
 				e.preventDefault();
 				props.fields.forEach((field) => {
-					inputValidation(field.props.name, field.props.value, field);
+					// @TODO Исправить типизацию
+					checkValidation(field.props.name, field.props.value, e.target?.elements);
 				});
 
 				if (props.fields.every((element) => !element.props.invalid)) {
@@ -50,14 +51,38 @@ export class Card extends Component<Props> {
 				events: {
 					blur(e) {
 						// @TODO исправить типизацию
-						inputValidation(
+						const isValid = checkValidation(
 							(e.target as HTMLInputElement).name,
 							(e.target as HTMLInputElement).value,
-							field
+							(e.target as HTMLInputElement).form?.elements
 						);
+
+						field.setProps({
+							invalid: !isValid,
+							errorText: !isValid
+								? getErrorText(field.props.name as FIELD_NAME)
+								: null,
+							// Иначе значение пропадает при перерисовке (валидный/не валидный)
+							value: (e.target as HTMLInputElement).value ?? "",
+						});
 					},
 					focus() {
-						resetValidation(field);
+						if (field.props.invalid) {
+							field.setProps({
+								invalid: false,
+								errorText: null,
+							});
+
+							// @TODO исправить типизацию
+							const htmlInputComponents = field.getContent() as HTMLInputElement;
+							const htmlInput = htmlInputComponents.querySelector("input");
+							htmlInputComponents.focus();
+
+							if (htmlInput) {
+								htmlInput.value = "";
+								htmlInput.value = field.props.value ?? "";
+							}
+						}
 					},
 				},
 			});
