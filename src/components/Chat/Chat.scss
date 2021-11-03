@@ -1,0 +1,111 @@
+@import "../../styles/vars";
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: spacing(3) spacing(5);
+
+  &.empty {
+    align-items: center;
+    justify-content: center;
+    color: $c-text-secondary;
+    font-size: 12px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: spacing(3);
+    padding-bottom: spacing(3);
+    border-bottom: 1px solid $c-border;
+  }
+
+  &__avatar {
+    width: 34px;
+    height: 34px;
+    margin-right: spacing(3);
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    border-top: 1px solid $c-border;
+    padding: spacing(3) 0;
+  }
+
+  &__input {
+    border: none;
+    background-color: $c-border;
+    padding: spacing(3) spacing(5);
+    border-radius: 30px;
+    flex-grow: 1;
+    font-size: 12px;
+  }
+
+  &__submit {
+    width: 30px;
+    height: 30px;
+    background-color: $c-primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: spacing(3);
+
+    &::after {
+      content: url("../../static/arrow-right.svg");
+      transition: transform $transition;
+    }
+
+    &:hover::after {
+      transform: translateX(1px);
+    }
+  }
+}
+
+.chat-message {
+  $this: &;
+
+  position: relative;
+  padding: spacing(3);
+  margin-bottom: spacing(3);
+  border-radius: 15px;
+  width: fit-content;
+  max-width: 450px;
+  background-color: $c-background-message;
+
+  &--owner {
+    margin-left: auto;
+    background-color: $c-blue-light;
+  }
+
+  &--riaded {
+    #{$this}__time {
+      color: $c-primary;
+    }
+  }
+
+  &__content {
+    font-size: 12px;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 30px;
+    }
+  }
+
+  &__time {
+    font-size: 9px;
+    color: $c-text-secondary;
+    margin-top: spacing(1);
+    text-align: right;
+  }
+}

@@ -1,0 +1,58 @@
+@use "sass:color";
+@import "../../styles/vars";
+$label-size: 9px;
+
+.input {
+  $this: &;
+
+  position: relative;
+  display: block;
+  margin-top: $label-size;
+  width: 100%;
+  min-width: 280px;
+
+  &__field {
+    width: 100%;
+    padding: spacing(2) 0;
+    border: none;
+    border-bottom: 2px $c-primary solid;
+    transition: border-color $transition;
+
+    &:focus {
+      border-color: color.adjust($c-primary, $lightness: -15%);
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      + #{$this} {
+        &__label {
+          top: -(spacing(2));
+          font-size: $label-size;
+        }
+      }
+    }
+
+    &[invalid] {
+      border-color: $c-danger;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: spacing(2);
+    left: 0;
+    transition: font-size 0.2s $transition-timing-function,
+      top 0.2s $transition-timing-function;
+    color: $c-text-secondary;
+  }
+
+  &__error {
+    margin-top: spacing(1);
+    font-size: 9px;
+    color: $c-danger;
+  }
+}
+
+.input + .input {
+  margin-top: calc(spacing(4) + $label-size);
+}

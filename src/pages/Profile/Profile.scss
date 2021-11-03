@@ -1,0 +1,21 @@
+@import "../../styles/vars";
+
+.profile {
+  &__avatar.avatar {
+    width: 130px;
+    height: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: spacing(5);
+    cursor: pointer;
+  }
+
+  &__name {
+    text-align: center;
+    margin-bottom: spacing(15);
+  }
+
+  .info-block + .info-block {
+    margin-top: spacing(15);
+  }
+}

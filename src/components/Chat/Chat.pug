@@ -1,0 +1,18 @@
+.chat(class=activeChat ? "" : 'empty')
+
+  if activeChat
+    .chat__header
+      .chat__title #{activeChat.props.title}
+
+    .chat__messages
+      each message in messages
+        .chat-message(class=message.isOwner ? 'chat-message--owner' : '')
+          p.chat-message__content #{message.content}
+          p.chat-message__time #{message.time}
+
+    form.chat__footer
+      input.chat__input(type="text" name="message" placeholder="Сообщение")
+      button.chat__submit(type="submit")
+
+  else
+    p Выберите чат чтобы отправить сообщение
