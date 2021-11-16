@@ -1,10 +1,15 @@
-import { renderDOM } from "../../utils/renderDOM";
+import { Component, ComponentProps } from "../../utils/component";
+import { parserDOM } from "../../utils/parserDOM";
 import { Avatar } from "../../components/Avatar";
 import { Link } from "../../components/Link";
 import { Info } from "../../components/Info";
 import { InfoBlock } from "../../components/InfoBlock";
 import { Title } from "../../components/Title";
+
 import "./Profile.scss";
+import compileTemplate from "./Profile.pug";
+
+interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
 const infoFieldsData = [
 	{
@@ -41,15 +46,15 @@ const infoFieldsData = [
 
 const infoActionData = [
 	{
-		href: "../ProfileEdit/ProfileEdit.html",
+		href: "./settings",
 		text: "Изменить данные",
 	},
 	{
-		href: "../ProfileChangePassword/ProfileChangePassword.html",
+		href: "./password",
 		text: "Изменить пароль",
 	},
 	{
-		href: "../../index.html",
+		href: "./",
 		text: "Выйти",
 		danger: true,
 	},
@@ -60,10 +65,7 @@ const fields = infoFieldsData.map((info) => new Info(info));
 const fieldsAction = infoActionData.map(
 	(action) =>
 		new Info({
-			link: new Link({
-				...action,
-				className: "info-link__label",
-			}),
+			link: new Link(action),
 		})
 );
 
@@ -85,7 +87,21 @@ const profileName =
 const name = new Title({
 	title: profileName,
 	level: 1,
-	className: "profile__name",
 });
 
-renderDOM(".render", avatar, name, infoBlockData, infoBlockAction);
+export class Profile extends Component<Props> {
+	constructor(props: Props = {}) {
+		super(props);
+	}
+
+	render() {
+		this.children = {
+			avatar,
+			name,
+			infoBlockData,
+			infoBlockAction,
+		};
+
+		return parserDOM(compileTemplate(this.props));
+	}
+}

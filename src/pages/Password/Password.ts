@@ -1,6 +1,11 @@
-import { renderDOM } from "../../utils/renderDOM";
+import { Component, ComponentProps } from "../../utils/component";
+import { parserDOM } from "../../utils/parserDOM";
 import { Card } from "../../components/Card";
 import { Input } from "../../components/Input";
+
+import compileTemplate from "./Password.pug";
+
+interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
 const fieldsData = [
 	{
@@ -28,4 +33,16 @@ const card = new Card({
 	fields,
 });
 
-renderDOM(".render", card);
+export class Password extends Component<Props> {
+	constructor(props: Props = {}) {
+		super(props);
+	}
+
+	render() {
+		this.children = {
+			card,
+		};
+
+		return parserDOM(compileTemplate(this.props));
+	}
+}

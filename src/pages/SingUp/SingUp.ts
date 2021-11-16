@@ -1,7 +1,12 @@
-import { renderDOM } from "../../utils/renderDOM";
+import { Component, ComponentProps } from "../../utils/component";
+import { parserDOM } from "../../utils/parserDOM";
 import { Card } from "../../components/Card";
 import { Link } from "../../components/Link";
 import { Input } from "../../components/Input";
+
+import compileTemplate from "./SingUp.pug";
+
+interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
 const fieldsData = [
 	{
@@ -41,9 +46,8 @@ const fieldsData = [
 const fields = fieldsData.map((field) => new Input(field));
 
 const link = new Link({
-	href: "../Auth/Auth.html",
+	href: "./sing-in",
 	text: "Войти",
-	className: "card__link",
 });
 
 const card = new Card({
@@ -53,4 +57,16 @@ const card = new Card({
 	fields,
 });
 
-renderDOM(".render", card);
+export class SingUp extends Component<Props> {
+	constructor(props: Props = {}) {
+		super(props);
+	}
+
+	render() {
+		this.children = {
+			card,
+		};
+
+		return parserDOM(compileTemplate(this.props));
+	}
+}

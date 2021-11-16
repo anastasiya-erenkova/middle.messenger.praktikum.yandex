@@ -15,11 +15,10 @@ export class ChatList extends Component<Props> {
 	}
 
 	render() {
-		const chatList = parserDOM(compileTemplate(this.props));
+		this.children = {
+			chats: this.props.chats,
+		};
 
-		const chatsContent = this.props.chats.map((chat) => chat.getContent());
-		chatList?.append(...chatsContent);
-
-		return chatList;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

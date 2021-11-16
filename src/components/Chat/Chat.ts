@@ -27,16 +27,14 @@ export class Chat extends Component<Props> {
 	}
 
 	render() {
-		const chat = parserDOM(compileTemplate(this.props));
-
 		const avatar = new Avatar({
 			url: this.props.activeChat?.props.avatarUrl,
-			className: "chat__avatar",
 		});
 
-		const chatTitle = chat?.querySelector(".chat__title");
-		chatTitle?.before(avatar.getContent());
+		this.children = {
+			avatar,
+		};
 
-		return chat;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

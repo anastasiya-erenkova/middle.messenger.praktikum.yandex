@@ -1,11 +1,11 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+
 import compileTemplate from "./Avatar.pug";
 import "./Avatar.scss";
 
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	url?: string;
-	className?: string;
 }
 
 const DEFAULT_AVATAR_URL = new URL(

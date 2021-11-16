@@ -19,16 +19,14 @@ export class ChatItem extends Component<Props> {
 	}
 
 	render() {
-		const chatItem = parserDOM(compileTemplate(this.props));
-		const chatMain = chatItem?.querySelector(".chat-item__main");
-
 		const avatar = new Avatar({
 			url: this.props.avatarUrl,
-			className: "chat-item__avatar",
 		});
 
-		chatMain?.before(avatar.getContent());
+		this.children = {
+			avatar,
+		};
 
-		return chatItem;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

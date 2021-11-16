@@ -2,7 +2,8 @@
 
   if activeChat
     .chat__header
-      .chat__title #{activeChat.props.title}
+      .chat__avatar(data-component='avatar')
+      h3.chat__title #{activeChat.props.title}
 
     .chat__messages
       each message in messages

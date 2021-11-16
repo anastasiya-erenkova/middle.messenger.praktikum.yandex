@@ -1,2 +1,10 @@
 form.card
+  .card__title(data-component='title')
   .card__fields
+    each field in fields
+      div(data-component='fields')
+
+  div(data-component='button')
+
+  if link
+    .card__link(data-component='link')

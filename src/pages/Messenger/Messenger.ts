@@ -1,8 +1,13 @@
-import { renderDOM } from "../../utils/renderDOM";
+import { Component, ComponentProps } from "../../utils/component";
+import { parserDOM } from "../../utils/parserDOM";
 import { ChatItem } from "../../components/ChatItem";
 import { ChatList, Props as ChatListProps } from "../../components/ChatList";
 import { Chat } from "../../components/Chat";
-import "./Chats.scss";
+
+import compileTemplate from "./Messenger.pug";
+import "./Messenger.scss";
+
+interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
 const chatsData = [
 	{
@@ -80,4 +85,17 @@ function getActiveChat() {
 	return activeChatIndex !== null ? chats[activeChatIndex] : undefined;
 }
 
-renderDOM(".render", chatList, chat);
+export class Messenger extends Component<Props> {
+	constructor(props: Props = {}) {
+		super(props);
+	}
+
+	render() {
+		this.children = {
+			chatList,
+			chat,
+		};
+
+		return parserDOM(compileTemplate(this.props));
+	}
+}

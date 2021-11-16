@@ -1,13 +1,15 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+import { onFormSubmit } from "../../helpers/onFormSubmit";
+import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
+
 import { Button } from "../Button";
 import { Link } from "../Link";
 import { Input } from "../Input";
 import { Title } from "../Title";
-import { onFormSubmit } from "../../helpers/onFormSubmit";
+
 import compileTemplate from "./Card.pug";
 import "./Card.scss";
-import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
 
 interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	title: string;
@@ -31,20 +33,20 @@ export class Card extends Component<Props> {
 				}
 			},
 		};
+
 		super({ ...props, events });
 	}
 
 	render() {
-		const card = parserDOM(compileTemplate(this.props));
-		const cardField = card?.querySelector(".card__fields");
-
-		const title = new Title({
-			level: 2,
-			title: this.props.title,
-			className: "card__title",
-		});
-
-		cardField?.before(title.getContent());
+		this.children = {
+			fields: this.props.fields,
+			link: this.props.link,
+			title: new Title({ level: 2, title: this.props.title }),
+			button: new Button({
+				text: this.props.buttonText,
+				autoTop: true,
+			}),
+		};
 
 		// @TODO перенести установку events в компонент Input
 		this.props.fields.forEach((field) => {
@@ -89,20 +91,6 @@ export class Card extends Component<Props> {
 			});
 		});
 
-		const fieldsContent = this.props.fields.map((field) => field.getContent());
-		cardField?.append(...fieldsContent);
-
-		const button = new Button({
-			text: this.props.buttonText,
-			autoTop: true,
-		});
-
-		card?.append(button.getContent());
-
-		if (this.props.link) {
-			card?.append(this.props.link.getContent());
-		}
-
-		return card;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

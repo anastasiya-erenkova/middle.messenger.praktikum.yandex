@@ -4,6 +4,11 @@ type Events = {
 	[key: string]: (e: Event) => void;
 };
 
+// @TODO TS
+type Child = {
+	[key: string]: any;
+};
+
 export interface ComponentProps {
 	events?: Events;
 }
@@ -20,11 +25,15 @@ export abstract class Component<Props extends ComponentProps> {
 	_element: HTMLElement | null = null;
 	abstract render(): HTMLElement | null;
 
+	children?: Child | Child[] = undefined;
 	props: Props;
 	eventBus: EventBus;
 
+	// @TODO TS
 	constructor(props: Props) {
 		this.props = this._makePropsProxy(props);
+
+		// this.children = children;
 
 		this.eventBus = new EventBus();
 
@@ -90,6 +99,37 @@ export abstract class Component<Props extends ComponentProps> {
 			this.element.replaceWith(block);
 			this.element = block;
 			this.addEvents();
+		}
+
+		this._renderChildren();
+	}
+
+	_renderChildren() {
+		if (this.children && this.element) {
+			for (const [name, value] of Object.entries(this.children)) {
+				const replaceData = this.element.querySelectorAll(
+					`[data-component=${name}]`
+				);
+
+				if (Array.isArray(value)) {
+					value.forEach((item, index) => {
+						this._replaceChild(replaceData[index], item);
+					});
+				} else {
+					// @TODO TS
+					this._replaceChild(replaceData[0], value as Component<any>);
+				}
+			}
+		}
+	}
+
+	_replaceChild(childToReplace: Element, child: Component<any>) {
+		if (childToReplace && child.element) {
+			const componentClassName =
+				childToReplace.getAttribute("class")?.split(" ") || [];
+
+			child.element.classList.add(...componentClassName);
+			childToReplace.replaceWith(child.getContent());
 		}
 	}
 
