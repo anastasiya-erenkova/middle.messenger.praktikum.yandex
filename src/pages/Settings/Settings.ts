@@ -48,6 +48,7 @@ const card = new Card({
 	title: "Редактирование профиля",
 	buttonText: "Сохранить",
 	fields,
+	onSubmit: (data) => console.log(data),
 });
 
 export class Settings extends Component<Props> {

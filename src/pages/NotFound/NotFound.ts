@@ -11,6 +11,7 @@ const error = new Error({
 	description: "Не туда попали",
 });
 
+// @TODO баг - почему то на странице не отображается ссылка на страницу чатов
 export class NotFound extends Component<Props> {
 	constructor(props: Props = {}) {
 		super(props);

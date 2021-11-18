@@ -3,8 +3,12 @@ import { parserDOM } from "../../utils/parserDOM";
 import { Card } from "../../components/Card";
 import { Link } from "../../components/Link";
 import { Input } from "../../components/Input";
+import { routes } from "../../utils/router";
+import { UserController } from "../../controllers/user-controller";
+import { goToMessenger } from "../../Router";
+import { checkUser } from "../../helpers/checkUser";
 
-import compileTemplate from "./SingUp.pug";
+import compileTemplate from "./SignUp.pug";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
@@ -46,20 +50,37 @@ const fieldsData = [
 const fields = fieldsData.map((field) => new Input(field));
 
 const link = new Link({
-	href: "./sing-in",
+	href: routes.signIn,
 	text: "Войти",
 });
+
+const onFormSubmit = async (data: FormData) => {
+	try {
+		await UserController.signUp(data);
+		goToMessenger();
+	} catch (err) {
+		console.log("err ", err.responseText);
+	}
+};
 
 const card = new Card({
 	title: "Регистрация",
 	buttonText: "Зарегистрироваться",
 	link,
 	fields,
+	onSubmit: onFormSubmit,
 });
 
-export class SingUp extends Component<Props> {
+export class SignUp extends Component<Props> {
 	constructor(props: Props = {}) {
 		super(props);
+	}
+
+	async componentDidMount() {
+		try {
+			await UserController.getInfo();
+			goToMessenger();
+		} catch (err) {}
 	}
 
 	render() {

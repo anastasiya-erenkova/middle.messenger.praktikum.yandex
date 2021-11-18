@@ -12,7 +12,6 @@ type Headers = {
 };
 
 type Options = {
-	method: string;
 	data?: object;
 	headers?: Headers;
 	timeout?: number;
@@ -26,53 +25,47 @@ function queryStringify(data: Options["data"]) {
 		: "";
 }
 
-export class HTTPTransport {
-	get = (url: string, options: Options) => {
-		const normalizeUrl = options.data
+export class HTTP {
+	baseUrl;
+
+	constructor(baseUrl: string) {
+		this.baseUrl = baseUrl;
+	}
+
+	get = (url: string, options?: Options) => {
+		const normalizeUrl = options?.data
 			? `${url}${queryStringify(options.data)}`
 			: url;
-		return this.request(
-			normalizeUrl,
-			{ ...options, method: METHODS.GET },
-			options.timeout
-		);
+
+		return this.request(normalizeUrl, METHODS.GET, options);
 	};
 
-	put = (url: string, options: Options) => {
-		return this.request(
-			url,
-			{ ...options, method: METHODS.PUT },
-			options.timeout
-		);
+	put = (url: string, options?: Options) => {
+		return this.request(url, METHODS.PUT, options);
 	};
 
-	post = (url: string, options: Options) => {
-		return this.request(
-			url,
-			{ ...options, method: METHODS.POST },
-			options.timeout
-		);
+	post = (url: string, options?: Options) => {
+		return this.request(url, METHODS.POST, options);
 	};
 
-	delete = (url: string, options: Options) => {
-		return this.request(
-			url,
-			{ ...options, method: METHODS.DELETE },
-			options.timeout
-		);
+	delete = (url: string, options?: Options) => {
+		return this.request(url, METHODS.DELETE, options);
 	};
 
 	request = (
 		url: string,
-		options: Options = { method: "GET" },
-		timeout = 5000
-	): Promise<XMLHttpRequest> => {
-		const { method, data, headers } = options;
+		method = "GET",
+		options: Options = { data: {} }
+	): Promise<XMLHttpRequest["response"]> => {
+		const { data, headers } = options;
+
+		const timeout = options.timeout ?? 5000;
 
 		return new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
-			xhr.open(method, url, true);
+			xhr.open(method, `${this.baseUrl}${url}`, true);
 			xhr.timeout = timeout;
+			xhr.withCredentials = true;
 
 			if (headers) {
 				Object.keys(headers).forEach((key) => {
@@ -80,8 +73,16 @@ export class HTTPTransport {
 				});
 			}
 
+			if (data) {
+				xhr.setRequestHeader("content-type", "application/json");
+			}
+
 			xhr.onload = function () {
-				resolve(xhr);
+				if (xhr.status === 200) {
+					resolve(xhr.response);
+				} else {
+					reject(xhr);
+				}
 			};
 
 			xhr.onabort = reject;

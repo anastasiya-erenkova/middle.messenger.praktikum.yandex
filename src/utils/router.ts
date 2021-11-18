@@ -4,7 +4,17 @@ function isEqual(lhs, rhs) {
 	return lhs === rhs;
 }
 
-export const NOT_FOUND_PATH = "/not-found";
+export const routes = {
+	main: "/",
+	signIn: "/sign-in",
+	signUp: "/sign-up",
+	profile: "/profile",
+	settings: "/settings",
+	password: "/password",
+	notFound: "/not-found",
+	error: "/error",
+	messenger: "/messenger",
+};
 
 // @TODO TS
 class Route {
@@ -75,7 +85,7 @@ export class Router {
 		const route = this.getRoute(pathname);
 
 		if (!route) {
-			this.go(NOT_FOUND_PATH);
+			this.go(routes.notFound);
 			return;
 		}
 

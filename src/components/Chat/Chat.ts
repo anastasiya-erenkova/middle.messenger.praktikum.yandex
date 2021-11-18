@@ -2,7 +2,7 @@ import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Avatar } from "../Avatar";
 import { ChatItem } from "../ChatItem";
-import { onFormSubmit } from "../../helpers/onFormSubmit";
+import { getFormData } from "../../helpers/getFormData";
 import compileTemplate from "./Chat.pug";
 import "./Chat.scss";
 
@@ -18,7 +18,7 @@ export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 }
 
 const events = {
-	submit: onFormSubmit,
+	submit: getFormData,
 };
 
 export class Chat extends Component<Props> {

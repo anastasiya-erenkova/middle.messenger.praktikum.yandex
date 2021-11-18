@@ -1,6 +1,6 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { onFormSubmit } from "../../helpers/onFormSubmit";
+import { getFormData } from "../../helpers/getFormData";
 import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
 
 import { Button } from "../Button";
@@ -16,6 +16,7 @@ interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	buttonText: string;
 	fields: Input[];
 	link?: Link;
+	onSubmit: (formData: FormData) => void;
 }
 
 export class Card extends Component<Props> {
@@ -29,7 +30,8 @@ export class Card extends Component<Props> {
 				});
 
 				if (props.fields.every((element) => !element.props.invalid)) {
-					onFormSubmit(e);
+					const data = getFormData(e);
+					props.onSubmit(data);
 				}
 			},
 		};

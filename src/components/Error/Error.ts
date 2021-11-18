@@ -23,7 +23,7 @@ export class Error extends Component<Props> {
 
 	render() {
 		this.children = {
-			link: linkBackward,
+			linkBackward,
 		};
 
 		return parserDOM(compileTemplate(this.props));

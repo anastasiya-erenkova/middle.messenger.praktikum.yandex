@@ -31,6 +31,7 @@ const card = new Card({
 	title: "Смена пароля",
 	buttonText: "Сохранить",
 	fields,
+	onSubmit: (data) => console.log(data),
 });
 
 export class Password extends Component<Props> {
