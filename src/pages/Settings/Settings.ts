@@ -1,64 +1,66 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+import { ObjectExtension } from "../../utils/objectExtension";
+import { storeInstance, globalStore } from "../../store";
 import { Card } from "../../components/Card";
 import { Input } from "../../components/Input";
+import { UserController } from "../../controllers/user-controller";
 
 import compileTemplate from "./Settings.pug";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
-const fieldsData = [
-	{
-		label: "Имя",
-		name: "first_name",
-		value: "Иван",
-	},
-	{
-		label: "Фамилия",
-		name: "second_name",
-		value: "Иванов",
-	},
-	{
-		label: "Имя в чате",
-		name: "display_name",
-		value: "Ванюша",
-	},
-	{
-		label: "Логин",
-		name: "login",
-		value: "ivanivanov",
-	},
-	{
-		label: "Почта",
-		name: "email",
-		type: "email",
-		value: "pochta@yandex.ru",
-	},
-	{
-		label: "Телефон",
-		name: "phone",
-		type: "tel",
-		value: "+7(909)9673030",
-	},
-];
+const labels = {
+	first_name: "Имя",
+	second_name: "Фамилия",
+	display_name: "Имя в чате",
+	login: "Логин",
+	email: "Почта",
+	phone: "Телефон",
+};
 
-const fields = fieldsData.map((field) => new Input(field));
+const types = {
+	email: "email",
+	phone: "tel",
+};
 
-const card = new Card({
-	title: "Редактирование профиля",
-	buttonText: "Сохранить",
-	fields,
-	onSubmit: (data) => console.log(data),
-});
+const getFields = () =>
+	ObjectExtension.keys(labels).map(
+		(key) =>
+			new Input({
+				label: labels[key],
+				name: key,
+				value: globalStore.user ? globalStore.user[key] : "",
+				type: types[key] ? types[key] : "",
+			})
+	);
+
+const getCard = () =>
+	new Card({
+		title: "Редактирование профиля",
+		buttonText: "Сохранить",
+		fields: getFields(),
+		onSubmit: async (data) => {
+			await UserController.editProfile(data);
+		},
+	});
 
 export class Settings extends Component<Props> {
 	constructor(props: Props = {}) {
 		super(props);
 	}
 
+	async componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(Settings.EVENTS.FLOW_CDU));
+
+		if (!globalStore.user) {
+			await UserController.getInfo();
+		}
+	}
+
 	render() {
 		this.children = {
-			card,
+			card: getCard(),
 		};
 
 		return parserDOM(compileTemplate(this.props));

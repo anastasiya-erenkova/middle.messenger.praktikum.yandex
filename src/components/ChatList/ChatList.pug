@@ -1,3 +1,4 @@
 .chat-list
-  each chat in chats
-    div(data-component='chats')
+  if chats
+    each chat in chats
+      div(data-component='chats')

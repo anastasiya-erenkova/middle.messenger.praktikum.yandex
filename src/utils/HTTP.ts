@@ -79,7 +79,14 @@ export class HTTP {
 
 			xhr.onload = function () {
 				if (xhr.status === 200) {
-					resolve(xhr.response);
+					const getResponse = () => {
+						try {
+							return JSON.parse(xhr.response);
+						} catch {
+							return xhr.response;
+						}
+					};
+					resolve(getResponse());
 				} else {
 					reject(xhr);
 				}

@@ -1,5 +1,8 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+import { ObjectExtension } from "../../utils/objectExtension";
+import { UserController } from "../../controllers/user-controller";
+import { storeInstance, globalStore } from "../../store";
 import { Avatar } from "../../components/Avatar";
 import { Link } from "../../components/Link";
 import { Info } from "../../components/Info";
@@ -11,38 +14,14 @@ import compileTemplate from "./Profile.pug";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
-const infoFieldsData = [
-	{
-		label: "Имя",
-		name: "first_name",
-		value: "Иван",
-	},
-	{
-		label: "Фамилия",
-		name: "second_name",
-		value: "Иванов",
-	},
-	{
-		label: "Имя в чате",
-		name: "display_name",
-		value: "Ванюша",
-	},
-	{
-		label: "Логин",
-		name: "login",
-		value: "ivanivanov",
-	},
-	{
-		label: "Почта",
-		name: "email",
-		value: "pochta@yandex.ru",
-	},
-	{
-		label: "Телефон",
-		name: "phone",
-		value: "+7 (909) 967 30 30",
-	},
-];
+const labels = {
+	first_name: "Имя",
+	second_name: "Фамилия",
+	display_name: "Имя в чате",
+	login: "Логин",
+	email: "Почта",
+	phone: "Телефон",
+};
 
 const infoActionData = [
 	{
@@ -57,10 +36,23 @@ const infoActionData = [
 		href: "./",
 		text: "Выйти",
 		danger: true,
+		events: {
+			click: async () => {
+				UserController.logout();
+			},
+		},
 	},
 ];
 
-const fields = infoFieldsData.map((info) => new Info(info));
+const getFields = () =>
+	ObjectExtension.keys(labels).map(
+		(key) =>
+			new Info({
+				label: labels[key],
+				name: key,
+				value: globalStore.user ? globalStore.user[key] : "",
+			})
+	);
 
 const fieldsAction = infoActionData.map(
 	(action) =>
@@ -69,36 +61,41 @@ const fieldsAction = infoActionData.map(
 		})
 );
 
-const infoBlockData = new InfoBlock({
-	fields,
-});
+const getInfoBlockData = () =>
+	new InfoBlock({
+		fields: getFields(),
+	});
 
 const infoBlockAction = new InfoBlock({
 	fields: fieldsAction,
 });
 
-const avatar = new Avatar({
-	className: "profile__avatar",
-});
+const avatar = new Avatar({});
 
-const profileName =
-	fields.find((field) => field.props.name === "first_name")?.props.value ?? "";
-
-const name = new Title({
-	title: profileName,
-	level: 1,
-});
+const getName = () =>
+	new Title({
+		title: globalStore.user ? globalStore.user["first_name"] : "",
+		level: 1,
+	});
 
 export class Profile extends Component<Props> {
 	constructor(props: Props = {}) {
 		super(props);
 	}
 
+	async componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(Profile.EVENTS.FLOW_CDU));
+
+		if (!globalStore.user) {
+			await UserController.getInfo();
+		}
+	}
+
 	render() {
 		this.children = {
 			avatar,
-			name,
-			infoBlockData,
+			name: getName(),
+			infoBlockData: getInfoBlockData(),
 			infoBlockAction,
 		};
 

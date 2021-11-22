@@ -1,1 +1,1 @@
-export { goToMessenger, goToSignIn } from "./Router";
+export { goToMessenger, goToSignIn, goToProfile } from "./Router";

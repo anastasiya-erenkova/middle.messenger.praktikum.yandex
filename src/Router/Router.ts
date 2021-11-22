@@ -32,3 +32,4 @@ router.start();
 
 export const goToSignIn = () => router.go(routes.signIn);
 export const goToMessenger = () => router.go(routes.messenger);
+export const goToProfile = () => router.go(routes.profile);

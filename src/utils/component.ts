@@ -33,8 +33,6 @@ export abstract class Component<Props extends ComponentProps> {
 	constructor(props: Props) {
 		this.props = this._makePropsProxy(props);
 
-		// this.children = children;
-
 		this.eventBus = new EventBus();
 
 		this._registerEvents(this.eventBus);

@@ -3,8 +3,8 @@ import { goToMessenger, goToSignIn } from "../Router";
 
 export const checkUser = async () => {
 	try {
-		await UserController.logout();
-		goToMessenger();
+		await UserController.getInfo();
+		// goToMessenger();
 	} catch (err) {
 		goToSignIn();
 	}

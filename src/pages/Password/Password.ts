@@ -1,47 +1,62 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+import { ObjectExtension } from "../../utils/objectExtension";
+import { storeInstance, globalStore } from "../../store";
 import { Card } from "../../components/Card";
 import { Input } from "../../components/Input";
+import { UserController } from "../../controllers/user-controller";
 
 import compileTemplate from "./Password.pug";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
-const fieldsData = [
-	{
-		label: "Старый пароль",
-		name: "oldPassword",
-		type: "password",
-	},
-	{
-		label: "Новый пароль",
-		name: "newPassword",
-		type: "password",
-	},
-	{
-		label: "Повторите новый пароль",
-		name: "repeatPassword",
-		type: "password",
-	},
-];
+const labels = {
+	oldPassword: "Старый пароль",
+	newPassword: "Новый пароль",
+	repeatPassword: "Повторите новый пароль",
+};
 
-const fields = fieldsData.map((field) => new Input(field));
+const getFields = () =>
+	ObjectExtension.keys(labels).map(
+		(key) =>
+			new Input({
+				label: labels[key],
+				name: key,
+				value: globalStore.user ? globalStore.user[key] : "",
+				type: "password",
+			})
+	);
 
-const card = new Card({
-	title: "Смена пароля",
-	buttonText: "Сохранить",
-	fields,
-	onSubmit: (data) => console.log(data),
-});
+const getCard = () =>
+	new Card({
+		title: "Смена пароля",
+		buttonText: "Сохранить",
+		fields: getFields(),
+		onSubmit: async (data) => {
+			const sendData = {
+				oldPassword: data.oldPassword,
+				newPassword: data.newPassword,
+			};
+			await UserController.editPassword(sendData);
+		},
+	});
 
 export class Password extends Component<Props> {
 	constructor(props: Props = {}) {
 		super(props);
 	}
 
+	async componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(Password.EVENTS.FLOW_CDU));
+
+		if (!globalStore.user) {
+			await UserController.getInfo();
+		}
+	}
+
 	render() {
 		this.children = {
-			card,
+			card: getCard(),
 		};
 
 		return parserDOM(compileTemplate(this.props));

@@ -1,5 +1,6 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { checkUser } from "../../helpers/checkUser";
+import { goToMessenger } from "../../Router";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
@@ -9,7 +10,10 @@ export class Main extends Component<Props> {
 	}
 
 	async componentDidMount() {
-		await checkUser();
+		try {
+			await checkUser();
+			goToMessenger();
+		} catch (err) {}
 	}
 
 	render() {

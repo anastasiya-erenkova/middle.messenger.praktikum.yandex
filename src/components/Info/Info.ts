@@ -1,3 +1,4 @@
+import { storeInstance } from "../../store";
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Link } from "../Link";
@@ -13,6 +14,10 @@ interface Props extends Partial<HTMLDivElement>, ComponentProps {
 export class Info extends Component<Props> {
 	constructor(props: Props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(Info.EVENTS.FLOW_CDU));
 	}
 
 	render() {

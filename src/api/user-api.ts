@@ -1,21 +1,13 @@
 import { API } from "../utils/APIService";
 
-const root = "/auth";
+const root = "/user";
 
 export class UserAPI {
-	public static fetch() {
-		return API.get(`${root}/user`);
+	public static editProfile(data: FormData) {
+		return API.put(`${root}/profile`, { data });
 	}
 
-	public static create(data: FormData) {
-		return API.post(`${root}/signup`, { data });
-	}
-
-	public static login(data: FormData) {
-		return API.post(`${root}/signin`, { data });
-	}
-
-	public static logout() {
-		return API.post(`${root}/logout`);
+	public static editPassword(data: FormData) {
+		return API.put(`${root}/password`, { data });
 	}
 }

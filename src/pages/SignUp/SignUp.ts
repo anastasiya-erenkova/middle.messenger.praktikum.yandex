@@ -6,7 +6,6 @@ import { Input } from "../../components/Input";
 import { routes } from "../../utils/router";
 import { UserController } from "../../controllers/user-controller";
 import { goToMessenger } from "../../Router";
-import { checkUser } from "../../helpers/checkUser";
 
 import compileTemplate from "./SignUp.pug";
 
@@ -59,7 +58,7 @@ const onFormSubmit = async (data: FormData) => {
 		await UserController.signUp(data);
 		goToMessenger();
 	} catch (err) {
-		console.log("err ", err.responseText);
+		window.alert(err.responseText);
 	}
 };
 

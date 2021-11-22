@@ -35,7 +35,7 @@ const onFormSubmit = async (data: FormData) => {
 		await UserController.signIn(data);
 		goToMessenger();
 	} catch (err) {
-		console.log("err ", err.responseText);
+		alert(err.responseText);
 	}
 };
 
