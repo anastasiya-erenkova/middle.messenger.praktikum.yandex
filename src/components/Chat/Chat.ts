@@ -117,7 +117,7 @@ export class Chat extends Component<Props> {
 	}
 
 	async componentDidUpdate() {
-		if (!this.sockets[globalStore.activeChatId]) {
+		if (this.sockets && !this.sockets[globalStore.activeChatId]) {
 			this.sockets[globalStore.activeChatId] = await createChatSocket();
 		}
 	}

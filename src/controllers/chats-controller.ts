@@ -1,4 +1,3 @@
-// import { storeSelector } from "../store";
 import { ChatsAPI, Chat } from "../api/chats-api";
 import { globalStore, storeInstance } from "../store";
 
