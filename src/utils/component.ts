@@ -126,8 +126,8 @@ export abstract class Component<Props extends ComponentProps> {
 			const componentClassName =
 				childToReplace.getAttribute("class")?.split(" ") || [];
 
-			child.element.classList.add(...componentClassName);
 			childToReplace.replaceWith(child.getContent());
+			child.element.classList.add(...componentClassName);
 		}
 	}
 
@@ -180,7 +180,7 @@ export abstract class Component<Props extends ComponentProps> {
 	show() {
 		const content = this.getContent() as HTMLElement;
 		if (content) {
-			content.style.display = "block";
+			content.style.display = "";
 		}
 	}
 

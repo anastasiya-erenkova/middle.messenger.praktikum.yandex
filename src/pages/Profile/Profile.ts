@@ -37,7 +37,8 @@ const infoActionData = [
 		text: "Выйти",
 		danger: true,
 		events: {
-			click: async () => {
+			click: async (e) => {
+				e.preventDefault();
 				UserController.logout();
 			},
 		},

@@ -38,6 +38,8 @@ const mergeData = (oldData, newData) => {
 	return result;
 };
 
+const sortByTime = (a, b) => new Date(a.time) - new Date(b.time);
+
 const createChatSocket = async () => {
 	const { activeChatId } = globalStore;
 
@@ -68,6 +70,8 @@ const createChatSocket = async () => {
 				globalStore.messages && globalStore.messages[globalStore.activeChatId]
 					? mergeData(globalStore.messages[globalStore.activeChatId], newMessages)
 					: newMessages;
+
+			messagesWithStore.sort(sortByTime);
 
 			if (globalStore.messages) {
 				storeInstance.setStore("messages", {

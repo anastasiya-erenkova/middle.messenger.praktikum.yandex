@@ -12,15 +12,20 @@
 - `npm run lint` — проверка анализаторами кода (eslint и stylelint),
 - `npm run eslint` — проверка eslint,
 - `npm run stylelint` — проверка stylelint,
-- `npm run prettier` — исправление кода форматтером.
+- `npm run prettier` — исправление кода форматтером,
+- `npm run test` — запуск тестов.
 
 ## Ссылки
 
 - [Макет в Figma](<https://www.figma.com/file/nFQKEa7kf3BoOgIoV8VUcK/Chat-(Copy)?node-id=0%3A1>)
 - [Deploy](https://naughty-swartz-228395.netlify.app/)
 
-## Используемые инструменты
+## Используемые технологии
 
+- parcel
+- typescript
 - eslint
 - stylelint
 - prettier
+- mocha
+- chai

@@ -13,7 +13,9 @@ export class Main extends Component<Props> {
 		try {
 			await checkUser();
 			goToMessenger();
-		} catch (err) {}
+		} catch (err) {
+			return;
+		}
 	}
 
 	render() {

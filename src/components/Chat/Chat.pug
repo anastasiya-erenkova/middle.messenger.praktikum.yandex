@@ -10,7 +10,8 @@
         each message in messages
           .chat-message(class=message.user_id===ownerUserId ? 'chat-message--owner' : '')
             p.chat-message__content #{message.content}
-            p.chat-message__time #{message.time}
+            // @TODO переделать изменение формата
+            p.chat-message__time #{message.time.replaceAll('-', '.').replace('T', ' ').slice(0, -9)} 
 
     form.chat__footer
       input.chat__input(type="text" name="message" placeholder="Сообщение")

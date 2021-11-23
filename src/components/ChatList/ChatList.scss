@@ -17,4 +17,17 @@
     background-color: $c-text-secondary;
     border-radius: 9em;
   }
+
+  &__header {
+    border-bottom: 1px solid $c-border;
+    padding: spacing(2);
+    text-align: right;
+  }
+
+  &__link {
+    color: $c-text-secondary;
+    cursor: pointer;
+    font-size: 12px;
+    padding: spacing(1);
+  }
 }

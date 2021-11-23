@@ -5,7 +5,7 @@ import { Link } from "../../components/Link";
 import { Input } from "../../components/Input";
 import { routes } from "../../utils/router";
 import { UserController } from "../../controllers/user-controller";
-import { goToMessenger } from "../../Router";
+import { goToMessenger, goToSignIn } from "../../Router";
 
 import compileTemplate from "./SignUp.pug";
 
@@ -79,7 +79,9 @@ export class SignUp extends Component<Props> {
 		try {
 			await UserController.getInfo();
 			goToMessenger();
-		} catch (err) {}
+		} catch (err) {
+			return;
+		}
 	}
 
 	render() {

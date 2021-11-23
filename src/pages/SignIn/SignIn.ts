@@ -55,8 +55,11 @@ export class SignIn extends Component<Props> {
 	async componentDidMount() {
 		try {
 			await UserController.getInfo();
-			goToMessenger();
-		} catch (err) {}
+			// goToMessenger();
+		} catch (err) {
+			console.log();
+			return;
+		}
 	}
 
 	render() {

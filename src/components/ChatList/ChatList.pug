@@ -1,4 +1,6 @@
 .chat-list
+  .chat-list__header 
+    span.chat-list__link(onclick=`onLinkClickToProfile(${JSON.stringify('/profile')});`) Профиль >
   if chats
     each chat in chats
       div(data-component='chats')
