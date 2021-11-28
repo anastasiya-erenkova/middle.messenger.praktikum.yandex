@@ -50,4 +50,11 @@ export class UserController {
 			goToProfile();
 		}
 	}
+
+	public static async changeAvatar(data: FormData) {
+		const response = await UserAPI.changeAvatar(data);
+		if (response) {
+			storeInstance.setStore("user", response);
+		}
+	}
 }

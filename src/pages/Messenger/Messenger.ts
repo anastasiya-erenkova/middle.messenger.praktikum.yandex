@@ -1,20 +1,17 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { ChatItem } from "../../components/ChatItem";
 import { ChatList, Props as ChatListProps } from "../../components/ChatList";
 import { Chat } from "../../components/Chat";
+import { Modal } from "../../components/Modal";
+import { globalStore } from "../../store";
+import { checkUser } from "../../helpers/checkUser";
 
 import compileTemplate from "./Messenger.pug";
 import "./Messenger.scss";
-import { ChatsController } from "../../controllers/chats-controller";
-import { globalStore } from "../../store";
-import { checkUser } from "../../helpers/checkUser";
-import { createSocket } from "../../utils/socket";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
-const chatList = new ChatList({});
-
+const getChatList = () => new ChatList({});
 const getChat = () => new Chat({});
 
 export class Messenger extends Component<Props> {
@@ -30,7 +27,7 @@ export class Messenger extends Component<Props> {
 
 	render() {
 		this.children = {
-			chatList,
+			chatList: getChatList(),
 			chat: getChat(),
 		};
 

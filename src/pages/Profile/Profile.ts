@@ -11,6 +11,8 @@ import { Title } from "../../components/Title";
 
 import "./Profile.scss";
 import compileTemplate from "./Profile.pug";
+import { Modal } from "../../components/Modal";
+import { Input } from "../../components/Input";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {}
 
@@ -71,12 +73,26 @@ const infoBlockAction = new InfoBlock({
 	fields: fieldsAction,
 });
 
-const avatar = new Avatar({});
-
 const getName = () =>
 	new Title({
 		title: globalStore.user ? globalStore.user["first_name"] : "",
 		level: 1,
+	});
+
+const fetFileInput = () =>
+	new Input({
+		label: "",
+		name: "avatar",
+		type: "file",
+		accept: "image/png, image/jpeg",
+		invalid: false,
+	});
+
+const getModal = () =>
+	new Modal({
+		title: "Загрузите файл",
+		buttonText: "Поменять",
+		fields: [fetFileInput()],
 	});
 
 export class Profile extends Component<Props> {
@@ -94,11 +110,35 @@ export class Profile extends Component<Props> {
 
 	render() {
 		this.children = {
-			avatar,
+			avatar: new Avatar({ url: globalStore.user?.avatar ?? "" }),
 			name: getName(),
 			infoBlockData: getInfoBlockData(),
 			infoBlockAction,
+			modal: getModal(),
 		};
+
+		const self = this;
+
+		this.children.avatar.setProps({
+			events: {
+				click: () => {
+					self.children.modal.setProps({
+						isOpen: true,
+						onSubmit: async (data, e) => {
+							try {
+								const formData = new FormData(e.target);
+								await UserController.changeAvatar(formData);
+								self.children.modal.setProps({
+									isOpen: false,
+								});
+							} catch (err) {
+								alert(err.responseText);
+							}
+						},
+					});
+				},
+			},
+		});
 
 		return parserDOM(compileTemplate(this.props));
 	}

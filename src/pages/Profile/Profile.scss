@@ -2,12 +2,36 @@
 
 .profile {
   &__avatar.avatar {
+    position: relative;
     width: 130px;
     height: 130px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: spacing(5);
     cursor: pointer;
+    overflow: hidden;
+
+    &::after {
+      content: "Поменять аватар";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba($c-black, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $c-white;
+      padding: spacing(2);
+      text-align: center;
+      opacity: 0%;
+      transition: opacity 0.2s $transition-timing-function;
+    }
+
+    &:hover::after {
+      opacity: 100%;
+    }
   }
 
   &__name {

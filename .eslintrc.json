@@ -8,5 +8,8 @@
     "es2021": true,
     "amd": true,
     "commonjs": true
+  },
+  "rules": {
+    "@typescript-eslint/no-this-alias": 1
   }
 }

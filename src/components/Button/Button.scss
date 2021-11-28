@@ -19,4 +19,8 @@
   &--auto-top {
     margin-top: auto;
   }
+
+  &--sm {
+    padding: spacing(1) spacing(5);
+  }
 }

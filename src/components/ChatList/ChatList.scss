@@ -21,7 +21,9 @@
   &__header {
     border-bottom: 1px solid $c-border;
     padding: spacing(2);
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__link {

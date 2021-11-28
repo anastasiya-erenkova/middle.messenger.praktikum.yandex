@@ -9,8 +9,7 @@ export class ChatsController {
 	}
 
 	public static async create(title: Chat["title"]) {
-		const response = await ChatsAPI.create(title);
-		return !!response;
+		await ChatsAPI.create(title);
 	}
 
 	public static async getToken(id: Chat["id"]) {

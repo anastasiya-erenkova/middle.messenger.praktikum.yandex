@@ -7,6 +7,13 @@ export class UserAPI {
 		return API.put(`${root}/profile`, { data });
 	}
 
+	public static changeAvatar(data: FormData) {
+		return API.put(`${root}/profile/avatar`, {
+			data,
+			isFormData: true,
+		});
+	}
+
 	public static editPassword(data: FormData) {
 		return API.put(`${root}/password`, { data });
 	}

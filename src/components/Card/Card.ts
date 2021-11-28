@@ -13,6 +13,7 @@ import "./Card.scss";
 
 interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	title: string;
+	isModal?: boolean;
 	buttonText: string;
 	fields: Input[];
 	link?: Link;
@@ -31,19 +32,24 @@ export class Card extends Component<Props> {
 
 				if (props.fields.every((element) => !element.props.invalid)) {
 					const data = getFormData(e);
-					props.onSubmit(data);
+					props.onSubmit(data, e);
 				}
 			},
 		};
 
-		super({ ...props, events });
+		const hasFile = props.fields.some((element) => element.props.type === "file");
+
+		super({ ...props, hasFile, events });
 	}
 
 	render() {
 		this.children = {
 			fields: this.props.fields,
 			link: this.props.link,
-			title: new Title({ level: 2, title: this.props.title }),
+			title: new Title({
+				level: this.props.isModal ? 3 : 2,
+				title: this.props.title,
+			}),
 			button: new Button({
 				text: this.props.buttonText,
 				autoTop: true,
@@ -54,25 +60,28 @@ export class Card extends Component<Props> {
 		this.props.fields.forEach((field) => {
 			field.setProps({
 				events: {
+					...field.props.events,
 					blur(e) {
-						// @TODO исправить типизацию
-						const isValid = checkValidation(
-							(e.target as HTMLInputElement).name,
-							(e.target as HTMLInputElement).value,
-							(e.target as HTMLInputElement).form?.elements
-						);
+						if (field.props.type !== "file") {
+							// @TODO исправить типизацию
+							const isValid = checkValidation(
+								(e.target as HTMLInputElement).name,
+								(e.target as HTMLInputElement).value,
+								(e.target as HTMLInputElement).form?.elements
+							);
 
-						field.setProps({
-							invalid: !isValid,
-							errorText: !isValid
-								? getErrorText(field.props.name as FIELD_NAME)
-								: null,
-							// Иначе значение пропадает при перерисовке (валидный/не валидный)
-							value: (e.target as HTMLInputElement).value ?? "",
-						});
+							field.setProps({
+								invalid: !isValid,
+								errorText: !isValid
+									? getErrorText(field.props.name as FIELD_NAME)
+									: null,
+								// Иначе значение пропадает при перерисовке (валидный/не валидный)
+								value: (e.target as HTMLInputElement).value ?? "",
+							});
+						}
 					},
 					focus() {
-						if (field.props.invalid) {
+						if (field.props.invalid && field.props.type !== "file") {
 							field.setProps({
 								invalid: false,
 								errorText: null,

@@ -15,6 +15,7 @@ type Options = {
 	data?: object;
 	headers?: Headers;
 	timeout?: number;
+	isFormData?: boolean;
 };
 
 function queryStringify(data: Options["data"]) {
@@ -55,9 +56,9 @@ export class HTTP {
 	request = (
 		url: string,
 		method = "GET",
-		options: Options = { data: {} }
+		options: Options = { data: {}, isFormData: false }
 	): Promise<XMLHttpRequest["response"]> => {
-		const { data, headers } = options;
+		const { data, headers, isFormData } = options;
 
 		const timeout = options.timeout ?? 5000;
 
@@ -67,14 +68,14 @@ export class HTTP {
 			xhr.timeout = timeout;
 			xhr.withCredentials = true;
 
+			if (data && !isFormData) {
+				xhr.setRequestHeader("content-type", "application/json");
+			}
+
 			if (headers) {
 				Object.keys(headers).forEach((key) => {
 					xhr.setRequestHeader(key, headers[key]);
 				});
-			}
-
-			if (data) {
-				xhr.setRequestHeader("content-type", "application/json");
 			}
 
 			xhr.onload = function () {
@@ -99,7 +100,7 @@ export class HTTP {
 			if (method === METHODS.GET || !data) {
 				xhr.send();
 			} else {
-				xhr.send(JSON.stringify(data));
+				xhr.send(isFormData ? data : JSON.stringify(data));
 			}
 		});
 	};

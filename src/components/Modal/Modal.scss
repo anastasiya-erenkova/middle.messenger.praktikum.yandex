@@ -1,0 +1,27 @@
+@import "../../styles/vars";
+
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($c-black, 0.6);
+  opacity: 0%;
+  visibility: hidden;
+  transition: opacity 0.2s $transition-timing-function,
+    visibility 0.2s $transition-timing-function;
+
+  &.is-open {
+    opacity: 100%;
+    visibility: visible;
+  }
+
+  &__card {
+    min-height: auto;
+  }
+}

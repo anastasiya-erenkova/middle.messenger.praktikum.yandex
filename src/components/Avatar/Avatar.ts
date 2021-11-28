@@ -22,7 +22,9 @@ export class Avatar extends Component<Props> {
 		return parserDOM(
 			compileTemplate({
 				...this.props,
-				url: this.props.url ?? DEFAULT_AVATAR_URL,
+				url: this.props.url
+					? `${"https://ya-praktikum.tech/api/v2/resources"}${this.props.url}`
+					: DEFAULT_AVATAR_URL,
 			})
 		);
 	}

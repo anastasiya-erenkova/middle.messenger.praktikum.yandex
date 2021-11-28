@@ -7,6 +7,7 @@ export interface Props extends Partial<HTMLInputElement>, ComponentProps {
 	label: string;
 	invalid?: boolean;
 	errorText?: string | null;
+	accept?: string;
 }
 
 export class Input extends Component<Props> {
