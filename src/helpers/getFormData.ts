@@ -1,5 +1,5 @@
-export const getFormData = (e: SubmitEvent) => {
-	const formData = new FormData(e.target);
+export const getFormData = (e: Event) => {
+	const formData = new FormData(e.target as HTMLFormElement);
 
 	const formObject: any = {};
 

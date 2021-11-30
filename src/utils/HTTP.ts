@@ -16,6 +16,8 @@ type Options = {
 	headers?: Headers;
 	timeout?: number;
 	isFormData?: boolean;
+	mode?: string;
+	credentials?: string;
 };
 
 function queryStringify(data: Options["data"]) {
@@ -100,7 +102,7 @@ export class HTTP {
 			if (method === METHODS.GET || !data) {
 				xhr.send();
 			} else {
-				xhr.send(isFormData ? data : JSON.stringify(data));
+				xhr.send(isFormData ? (data as FormData) : JSON.stringify(data));
 			}
 		});
 	};
