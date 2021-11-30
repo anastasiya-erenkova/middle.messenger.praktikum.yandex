@@ -11,7 +11,7 @@
           .chat-message(class=message.user_id===ownerUserId ? 'chat-message--owner' : '')
             p.chat-message__content #{message.content}
             // @TODO переделать изменение формата
-            p.chat-message__time #{message.time.replaceAll('-', '.').replace('T', ' ').slice(0, -9)} 
+            p.chat-message__time #{message.time.replace('-', '.').replace('-', '.').replace('T', ' ').slice(0, -9)} 
 
     form.chat__footer
       input.chat__input(type="text" name="message" placeholder="Сообщение")

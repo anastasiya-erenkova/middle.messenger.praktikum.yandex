@@ -1,4 +1,4 @@
-import { API } from "../utils/APIService";
+import { API, Options } from "../utils/APIService";
 
 export interface Chat {
 	id: number;
@@ -6,7 +6,7 @@ export interface Chat {
 	avatar: string;
 }
 
-interface ChatOptions {
+interface ChatOptions extends Options {
 	offset?: number;
 	limit?: number;
 	title?: string;

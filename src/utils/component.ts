@@ -19,6 +19,7 @@ export abstract class Component<Props extends ComponentProps> {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
 		FLOW_CDU: "flow:component-did-update",
+		FLOW_CDUM: "flow:component-did-unmount",
 		FLOW_RENDER: "flow:render",
 	};
 
@@ -42,6 +43,7 @@ export abstract class Component<Props extends ComponentProps> {
 	_registerEvents(eventBus: EventBus) {
 		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+		eventBus.on(Component.EVENTS.FLOW_CDUM, this._componentDidUnmount.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
@@ -58,6 +60,16 @@ export abstract class Component<Props extends ComponentProps> {
 	// Может переопределять пользователь, необязательно трогать
 	componentDidMount() {
 		return;
+	}
+
+	componentDidUnmount() {
+		return;
+	}
+
+	_componentDidUnmount() {
+		this.removeEvents();
+		this.element = null;
+		this.children = undefined;
 	}
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
@@ -178,16 +190,10 @@ export abstract class Component<Props extends ComponentProps> {
 	}
 
 	show() {
-		const content = this.getContent() as HTMLElement;
-		if (content) {
-			content.style.display = "";
-		}
+		this.eventBus.emit(Component.EVENTS.INIT);
 	}
 
 	hide() {
-		const content = this.getContent() as HTMLElement;
-		if (content) {
-			content.style.display = "none";
-		}
+		this.eventBus.emit(Component.EVENTS.FLOW_CDUM);
 	}
 }

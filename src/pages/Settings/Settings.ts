@@ -30,8 +30,8 @@ const getFields = () =>
 			new Input({
 				label: labels[key],
 				name: key,
-				value: globalStore.user ? globalStore.user[key] : "",
-				type: types[key] ? types[key] : "",
+				value: globalStore.user?.[key] ?? "",
+				type: types[key] ?? "",
 			})
 	);
 

@@ -1,5 +1,5 @@
 import { ObjectExtension } from "../utils/objectExtension";
-import { Router, routes } from "../utils/router";
+import router, { routes } from "../utils/router";
 import { Main } from "../pages/Main";
 import { SignIn } from "../pages/SignIn";
 import { SignUp } from "../pages/SignUp";
@@ -21,8 +21,6 @@ const routesComponents = {
 	[routes.error]: Error,
 	[routes.messenger]: Messenger,
 };
-
-const router = new Router(".app");
 
 ObjectExtension.keys(routesComponents).forEach((key) => {
 	router.use(key, routesComponents[key]);

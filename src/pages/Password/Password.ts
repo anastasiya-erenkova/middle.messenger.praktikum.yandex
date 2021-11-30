@@ -22,7 +22,7 @@ const getFields = () =>
 			new Input({
 				label: labels[key],
 				name: key,
-				value: globalStore.user ? globalStore.user[key] : "",
+				value: globalStore.user?.[key] ?? "",
 				type: "password",
 			})
 	);

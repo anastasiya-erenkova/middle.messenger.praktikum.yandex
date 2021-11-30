@@ -41,15 +41,19 @@ const mergeData = (oldData, newData) => {
 const sortByTime = (a, b) => new Date(a.time) - new Date(b.time);
 
 const createChatSocket = async () => {
-	const { activeChatId } = globalStore;
+	if (globalStore.user && globalStore.activeChatId) {
+		const getToken = () => globalStore.tokens?.[globalStore.activeChatId];
 
-	if (globalStore.user && activeChatId) {
-		const getToken = () => globalStore.tokens && globalStore.tokens[activeChatId];
 		if (!getToken()) {
-			await ChatsController.getToken(activeChatId);
+			await ChatsController.getToken(globalStore.activeChatId);
 		}
+
 		const token = getToken();
-		const socket = createSocket(globalStore.user.id, activeChatId, token);
+		const socket = createSocket(
+			globalStore.user.id,
+			globalStore.activeChatId,
+			token
+		);
 
 		socket.addEventListener("open", () => {
 			console.log("Соединение установлено");
@@ -130,8 +134,7 @@ export class Chat extends Component<Props> {
 		this.setProps({
 			activeChatId: globalStore.activeChatId,
 			activeChat: globalStore.activeChat,
-			messages:
-				globalStore.messages && globalStore.messages[globalStore.activeChatId],
+			messages: globalStore.messages?.[globalStore.activeChatId],
 			ownerUserId: globalStore.user?.id,
 		});
 

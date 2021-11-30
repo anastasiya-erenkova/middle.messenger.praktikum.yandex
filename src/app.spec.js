@@ -6,6 +6,9 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
+const describe = require("mocha").describe;
+const it = require("mocha").it;
+
 describe("Express static", function () {
 	it('GET request "/" should return the index page', function () {
 		return chai

@@ -11,7 +11,7 @@ type Headers = {
 	[key: string]: string;
 };
 
-type Options = {
+export type Options = {
 	data?: object;
 	headers?: Headers;
 	timeout?: number;

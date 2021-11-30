@@ -1,7 +1,6 @@
 import { expect } from "chai";
+import "jsdom-global/register";
 import { getFormData } from "./getFormData";
-
-require("jsdom-global")();
 
 const TEST_NAME = "Test Name";
 const TEST_LOGIN = "Test Login";

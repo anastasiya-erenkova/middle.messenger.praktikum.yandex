@@ -53,7 +53,7 @@ const getFields = () =>
 			new Info({
 				label: labels[key],
 				name: key,
-				value: globalStore.user ? globalStore.user[key] : "",
+				value: globalStore.user?.[key] ?? "",
 			})
 	);
 

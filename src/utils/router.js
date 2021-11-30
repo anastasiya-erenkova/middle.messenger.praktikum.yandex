@@ -45,27 +45,25 @@ class Route {
 	render() {
 		if (!this._block) {
 			this._block = new this._blockClass();
-			renderDOM(this._props.rootQuery, this._block);
-			return;
 		}
 
-		this._block.show();
-		// renderDOM(this._props.rootQuery, this._block);
+		const root = document.querySelector(this._props.rootQuery);
+
+		if (root.firstElementChild) {
+			this._block.show();
+			root.firstElementChild.replaceWith(this._block.getContent());
+		} else {
+			renderDOM(this._props.rootQuery, this._block);
+		}
 	}
 }
 
-export class Router {
+class Router {
 	constructor(rootQuery) {
-		if (Router.__instance) {
-			return Router.__instance;
-		}
-
 		this.routes = [];
 		this.history = window.history;
 		this._currentRoute = null;
 		this._rootQuery = rootQuery;
-
-		Router.__instance = this;
 	}
 
 	use(pathname, block) {
@@ -116,3 +114,5 @@ export class Router {
 		return currentRoute;
 	}
 }
+
+export default new Router(".app");

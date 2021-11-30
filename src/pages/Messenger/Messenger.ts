@@ -1,8 +1,7 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
-import { ChatList, Props as ChatListProps } from "../../components/ChatList";
+import { ChatList } from "../../components/ChatList";
 import { Chat } from "../../components/Chat";
-import { Modal } from "../../components/Modal";
 import { globalStore } from "../../store";
 import { checkUser } from "../../helpers/checkUser";
 
