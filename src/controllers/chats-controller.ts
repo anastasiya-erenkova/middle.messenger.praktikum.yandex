@@ -5,7 +5,6 @@ export class ChatsController {
 	public static async fetch() {
 		const response = await ChatsAPI.fetch();
 		response && storeInstance.setStore("chats", response);
-		return !!response;
 	}
 
 	public static async create(title: Chat["title"]) {
@@ -14,11 +13,14 @@ export class ChatsController {
 
 	public static async getToken(id: Chat["id"]) {
 		const response = await ChatsAPI.getToken(id);
-		response &&
+
+		if (response) {
 			storeInstance.setStore("tokens", {
 				...globalStore.tokens,
 				[id]: response.token,
 			});
+		}
+
 		return !!response;
 	}
 }

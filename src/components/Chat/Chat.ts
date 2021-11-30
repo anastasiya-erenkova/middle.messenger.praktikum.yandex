@@ -70,10 +70,9 @@ const createChatSocket = async () => {
 			const parseData = JSON.parse(event.data);
 			const newMessages = Array.isArray(parseData) ? parseData : [parseData];
 
-			const messagesWithStore =
-				globalStore.messages && globalStore.messages[globalStore.activeChatId]
-					? mergeData(globalStore.messages[globalStore.activeChatId], newMessages)
-					: newMessages;
+			const messagesWithStore = globalStore.messages?.[globalStore.activeChatId]
+				? mergeData(globalStore.messages[globalStore.activeChatId], newMessages)
+				: newMessages;
 
 			messagesWithStore.sort(sortByTime);
 

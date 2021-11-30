@@ -75,7 +75,7 @@ const infoBlockAction = new InfoBlock({
 
 const getName = () =>
 	new Title({
-		title: globalStore.user ? globalStore.user["first_name"] : "",
+		title: globalStore.user?.["first_name"] ?? "",
 		level: 1,
 	});
 

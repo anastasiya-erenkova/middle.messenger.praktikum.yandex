@@ -16,7 +16,7 @@ const root = "/chats";
 
 export class ChatsAPI {
 	public static fetch(options?: ChatOptions) {
-		return API.get(root, options ? { data: options } : undefined);
+		return API.get(root, options && { data: options });
 	}
 
 	public static create(title: Chat["title"]) {

@@ -67,6 +67,7 @@ export abstract class Component<Props extends ComponentProps> {
 	}
 
 	_componentDidUnmount() {
+		this.componentDidUnmount();
 		this.removeEvents();
 		this.element = null;
 		this.children = undefined;

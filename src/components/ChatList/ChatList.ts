@@ -1,6 +1,6 @@
 import { Chat } from "../../api/chats-api";
 import { ChatsController } from "../../controllers/chats-controller";
-import { goTo } from "../../Router";
+import { goToProfile } from "../../Router";
 import { storeInstance, globalStore } from "../../store";
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
@@ -15,11 +15,6 @@ import "./ChatList.scss";
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	chats: ChatItem[];
 }
-
-// @TODO
-window.onLinkClickToProfile = (pathname) => {
-	goTo(pathname);
-};
 
 const getChats = (data: Chat[]) => data.map((chat) => new ChatItem(chat));
 
@@ -56,6 +51,13 @@ export class ChatList extends Component<Props> {
 	}
 
 	render() {
+		const chatList = parserDOM(compileTemplate(this.props));
+
+		const linkProfile = chatList.querySelector(".chat-list__link");
+		linkProfile?.addEventListener("click", () => {
+			goToProfile();
+		});
+
 		this.children = {
 			chats: getChats(globalStore.chats || []),
 			modal: getModal(),
@@ -85,6 +87,6 @@ export class ChatList extends Component<Props> {
 			},
 		});
 
-		return parserDOM(compileTemplate(this.props));
+		return chatList;
 	}
 }
