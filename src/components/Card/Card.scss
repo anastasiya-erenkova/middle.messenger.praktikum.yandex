@@ -1,6 +1,8 @@
 @import "../../styles/vars";
 
 .card {
+  $this: &;
+
   padding: 30px;
   padding-top: 50px;
   width: 340px;
@@ -9,6 +11,7 @@
   min-height: 450px;
   display: flex;
   flex-direction: column;
+  background-color: $c-white;
 
   &__title {
     align-self: center;
@@ -24,5 +27,15 @@
     align-self: center;
     padding: spacing(1);
     margin-top: spacing(3);
+  }
+
+  &--modal {
+    #{$this}__title {
+      margin-bottom: spacing(5);
+    }
+
+    #{$this}__fields {
+      margin-bottom: spacing(10);
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { storeInstance } from "../../store";
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { Link } from "../Link";
@@ -15,13 +16,15 @@ export class Info extends Component<Props> {
 		super(props);
 	}
 
+	componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(Info.EVENTS.FLOW_CDU));
+	}
+
 	render() {
-		const info = parserDOM(compileTemplate(this.props));
+		this.children = {
+			link: this.props.link,
+		};
 
-		if (this.props.link) {
-			info?.append(this.props.link.getContent());
-		}
-
-		return info;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

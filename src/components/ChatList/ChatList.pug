@@ -1,1 +1,9 @@
+
 .chat-list
+  .chat-list__header
+    div(data-component='addButton')
+    span.chat-list__link Профиль >
+  if chats
+    each chat in chats
+      div(data-component='chats')
+  div(data-component='modal')

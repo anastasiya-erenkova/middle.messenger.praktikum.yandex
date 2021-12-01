@@ -4,6 +4,11 @@ type Events = {
 	[key: string]: (e: Event) => void;
 };
 
+// @TODO TS
+type Child = {
+	[key: string]: any;
+};
+
 export interface ComponentProps {
 	events?: Events;
 }
@@ -14,15 +19,18 @@ export abstract class Component<Props extends ComponentProps> {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
 		FLOW_CDU: "flow:component-did-update",
+		FLOW_CDUM: "flow:component-did-unmount",
 		FLOW_RENDER: "flow:render",
 	};
 
 	_element: HTMLElement | null = null;
 	abstract render(): HTMLElement | null;
 
+	children?: Child | Child[] = undefined;
 	props: Props;
 	eventBus: EventBus;
 
+	// @TODO TS
 	constructor(props: Props) {
 		this.props = this._makePropsProxy(props);
 
@@ -35,6 +43,7 @@ export abstract class Component<Props extends ComponentProps> {
 	_registerEvents(eventBus: EventBus) {
 		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+		eventBus.on(Component.EVENTS.FLOW_CDUM, this._componentDidUnmount.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
@@ -51,6 +60,17 @@ export abstract class Component<Props extends ComponentProps> {
 	// Может переопределять пользователь, необязательно трогать
 	componentDidMount() {
 		return;
+	}
+
+	componentDidUnmount() {
+		return;
+	}
+
+	_componentDidUnmount() {
+		this.componentDidUnmount();
+		this.removeEvents();
+		this.element = null;
+		this.children = undefined;
 	}
 
 	_componentDidUpdate(oldProps: Props, newProps: Props) {
@@ -90,6 +110,37 @@ export abstract class Component<Props extends ComponentProps> {
 			this.element.replaceWith(block);
 			this.element = block;
 			this.addEvents();
+		}
+
+		this._renderChildren();
+	}
+
+	_renderChildren() {
+		if (this.children && this.element) {
+			for (const [name, value] of Object.entries(this.children)) {
+				const replaceData = this.element.querySelectorAll(
+					`[data-component=${name}]`
+				);
+
+				if (Array.isArray(value)) {
+					value.forEach((item, index) => {
+						this._replaceChild(replaceData[index], item);
+					});
+				} else {
+					// @TODO TS
+					this._replaceChild(replaceData[0], value as Component<any>);
+				}
+			}
+		}
+	}
+
+	_replaceChild(childToReplace: Element, child: Component<any>) {
+		if (childToReplace && child.element) {
+			const componentClassName =
+				childToReplace.getAttribute("class")?.split(" ") || [];
+
+			childToReplace.replaceWith(child.getContent());
+			child.element.classList.add(...componentClassName);
 		}
 	}
 
@@ -140,16 +191,10 @@ export abstract class Component<Props extends ComponentProps> {
 	}
 
 	show() {
-		const content = this.getContent() as HTMLElement;
-		if (content) {
-			content.style.display = "block";
-		}
+		this.eventBus.emit(Component.EVENTS.INIT);
 	}
 
 	hide() {
-		const content = this.getContent() as HTMLElement;
-		if (content) {
-			content.style.display = "none";
-		}
+		this.eventBus.emit(Component.EVENTS.FLOW_CDUM);
 	}
 }

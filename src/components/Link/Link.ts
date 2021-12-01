@@ -1,3 +1,4 @@
+import { goTo } from "../../Router";
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import compileTemplate from "./Link.pug";
@@ -7,12 +8,18 @@ export interface Props extends Partial<HTMLAnchorElement>, ComponentProps {
 	href: string;
 	text: string;
 	danger?: boolean;
-	className?: string;
 }
+
+const events = {
+	click: (e) => {
+		e.preventDefault();
+		goTo(e.currentTarget.pathname);
+	},
+};
 
 export class Link extends Component<Props> {
 	constructor(props: Props) {
-		super(props);
+		super({ events, ...props });
 	}
 
 	render() {

@@ -6,6 +6,7 @@ import "./Button.scss";
 export interface Props extends Partial<HTMLButtonElement>, ComponentProps {
 	text: string;
 	autoTop?: boolean;
+	small?: boolean;
 }
 
 export class Button extends Component<Props> {

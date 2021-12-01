@@ -11,3 +11,5 @@ app.get("/", function (req, res) {
 });
 
 app.listen(PORT);
+
+module.exports = app; // Export for testing

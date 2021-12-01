@@ -1,19 +1,23 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
+import { getFormData } from "../../helpers/getFormData";
+import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
+
 import { Button } from "../Button";
 import { Link } from "../Link";
 import { Input } from "../Input";
 import { Title } from "../Title";
-import { onFormSubmit } from "../../helpers/onFormSubmit";
+
 import compileTemplate from "./Card.pug";
 import "./Card.scss";
-import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
 
 interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	title: string;
+	isModal?: boolean;
 	buttonText: string;
 	fields: Input[];
 	link?: Link;
+	onSubmit: (formData: FormData) => void;
 }
 
 export class Card extends Component<Props> {
@@ -27,48 +31,57 @@ export class Card extends Component<Props> {
 				});
 
 				if (props.fields.every((element) => !element.props.invalid)) {
-					onFormSubmit(e);
+					const data = getFormData(e);
+					props.onSubmit(data, e);
 				}
 			},
 		};
-		super({ ...props, events });
+
+		const hasFile = props.fields.some((element) => element.props.type === "file");
+
+		super({ ...props, hasFile, events });
 	}
 
 	render() {
-		const card = parserDOM(compileTemplate(this.props));
-		const cardField = card?.querySelector(".card__fields");
-
-		const title = new Title({
-			level: 2,
-			title: this.props.title,
-			className: "card__title",
-		});
-
-		cardField?.before(title.getContent());
+		this.children = {
+			fields: this.props.fields,
+			link: this.props.link,
+			title: new Title({
+				level: this.props.isModal ? 3 : 2,
+				title: this.props.title,
+			}),
+			button: new Button({
+				text: this.props.buttonText,
+				autoTop: true,
+			}),
+		};
 
 		// @TODO перенести установку events в компонент Input
 		this.props.fields.forEach((field) => {
 			field.setProps({
 				events: {
+					...field.props.events,
 					blur(e) {
-						// @TODO исправить типизацию
-						const isValid = checkValidation(
-							(e.target as HTMLInputElement).name,
-							(e.target as HTMLInputElement).value,
-							(e.target as HTMLInputElement).form?.elements
-						);
+						if (field.props.type !== "file") {
+							// @TODO исправить типизацию
+							const isValid = checkValidation(
+								(e.target as HTMLInputElement).name,
+								(e.target as HTMLInputElement).value,
+								(e.target as HTMLInputElement).form?.elements
+							);
 
-						field.setProps({
-							invalid: !isValid,
-							errorText: !isValid
-								? getErrorText(field.props.name as FIELD_NAME)
-								: null,
-							// Иначе значение пропадает при перерисовке (валидный/не валидный)
-							value: (e.target as HTMLInputElement).value ?? "",
-						});
+							field.setProps({
+								invalid: !isValid,
+								errorText: !isValid
+									? getErrorText(field.props.name as FIELD_NAME)
+									: null,
+								// Иначе значение пропадает при перерисовке (валидный/не валидный)
+								value: (e.target as HTMLInputElement).value ?? "",
+							});
+						}
 					},
 					focus() {
-						if (field.props.invalid) {
+						if (field.props.invalid && field.props.type !== "file") {
 							field.setProps({
 								invalid: false,
 								errorText: null,
@@ -89,20 +102,6 @@ export class Card extends Component<Props> {
 			});
 		});
 
-		const fieldsContent = this.props.fields.map((field) => field.getContent());
-		cardField?.append(...fieldsContent);
-
-		const button = new Button({
-			text: this.props.buttonText,
-			autoTop: true,
-		});
-
-		card?.append(button.getContent());
-
-		if (this.props.link) {
-			card?.append(this.props.link.getContent());
-		}
-
-		return card;
+		return parserDOM(compileTemplate(this.props));
 	}
 }

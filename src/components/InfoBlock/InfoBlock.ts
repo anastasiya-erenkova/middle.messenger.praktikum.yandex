@@ -1,5 +1,9 @@
+import { storeInstance } from "../../store";
 import { Component, ComponentProps } from "../../utils/component";
+import { parserDOM } from "../../utils/parserDOM";
 import { Info } from "../Info";
+
+import compileTemplate from "./InfoBlock.pug";
 
 interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	fields: Info[];
@@ -10,13 +14,15 @@ export class InfoBlock extends Component<Props> {
 		super(props);
 	}
 
+	componentDidMount() {
+		storeInstance.subsribe(() => this.eventBus.emit(InfoBlock.EVENTS.FLOW_CDU));
+	}
+
 	render() {
-		const infoBlock = document.createElement("div");
-		infoBlock.classList.add("info-block");
+		this.children = {
+			fields: this.props.fields,
+		};
 
-		const fieldsContent = this.props.fields.map((field) => field.getContent());
-		infoBlock.append(...fieldsContent);
-
-		return infoBlock;
+		return parserDOM(compileTemplate(this.props));
 	}
 }
