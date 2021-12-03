@@ -1,4 +1,6 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: "development",
@@ -10,6 +12,15 @@ module.exports = {
 	resolve: {
 		extensions: [".ts", ".js", ".json"],
 	},
+	devServer: {
+		static: "./dist",
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: "./src/index.html",
+		}),
+		new MiniCssExtractPlugin(),
+	],
 	module: {
 		rules: [
 			{
@@ -26,28 +37,13 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
-				use: [
-					{ loader: "css-loader" },
-					{
-						loader: "sass-loader",
-						options: { sourceMap: true },
-					},
-				],
+				use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
 			},
 			{
 				test: /\.pug$/,
 				use: [
 					{
-						loader: "html-loader",
-					},
-					{
 						loader: "pug-loader",
-					},
-					{
-						loader: "pug-html-loader",
-						options: {
-							pretty: true,
-						},
 					},
 				],
 			},

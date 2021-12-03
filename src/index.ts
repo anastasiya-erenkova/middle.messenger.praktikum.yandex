@@ -1,2 +1,2 @@
-import "./index.d.ts";
+import "./styles/main.scss";
 import "./Router";
