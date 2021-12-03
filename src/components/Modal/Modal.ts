@@ -11,7 +11,7 @@ export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	title: string;
 	buttonText: string;
 	fields: Input[];
-	onSubmit: any;
+	onSubmit?: any;
 }
 
 export class Modal extends Component<Props> {
@@ -21,8 +21,8 @@ export class Modal extends Component<Props> {
 
 	componentDidMount() {
 		const events = {
-			click: (event) => {
-				if (!event.target.closest(".modal__card")) {
+			click: (event: Event) => {
+				if (!(event.target as HTMLDivElement).closest(".modal__card")) {
 					this.setProps({
 						isOpen: false,
 					});

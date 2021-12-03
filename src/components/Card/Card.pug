@@ -1,8 +1,9 @@
 form.card(class=isModal ? 'card--modal' : '' enctype=hasFile ? 'multipart/form-data' : '')
   .card__title(data-component='title')
   .card__fields
-    each field in fields
-      div(data-component='fields')
+    if fields
+      each field in fields
+        div(data-component='fields')
 
   div(data-component='button')
 

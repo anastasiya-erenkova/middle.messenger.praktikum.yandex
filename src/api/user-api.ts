@@ -3,7 +3,7 @@ import { API } from "../utils/APIService";
 const root = "/user";
 
 export class UserAPI {
-	public static editProfile(data: FormData) {
+	public static editProfile(data: object) {
 		return API.put(`${root}/profile`, { data });
 	}
 
@@ -14,7 +14,7 @@ export class UserAPI {
 		});
 	}
 
-	public static editPassword(data: FormData) {
+	public static editPassword(data: object) {
 		return API.put(`${root}/password`, { data });
 	}
 }

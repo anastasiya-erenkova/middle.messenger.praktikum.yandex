@@ -33,10 +33,10 @@ const getCard = () =>
 		buttonText: "Сохранить",
 		fields: getFields(),
 		onSubmit: async (data) => {
-			const sendData = {
-				oldPassword: data.oldPassword,
-				newPassword: data.newPassword,
+			const { repeatPassword: _repeatPassword, ...sendData } = data as {
+				[key: string]: any;
 			};
+
 			await UserController.editPassword(sendData);
 		},
 	});

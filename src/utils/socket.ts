@@ -1,4 +1,4 @@
-export const createSocket = (userId, chatId, token) => {
+export const createSocket = (userId: string, chatId: string, token: string) => {
 	const socket = new WebSocket(
 		`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
 	);
@@ -13,7 +13,7 @@ export const createSocket = (userId, chatId, token) => {
 		console.log(`Код: ${event.code} | Причина: ${event.reason}`);
 	});
 
-	socket.addEventListener("error", (event) => {
+	socket.addEventListener("error", (event: ErrorEvent) => {
 		console.log("Ошибка", event.message);
 	});
 

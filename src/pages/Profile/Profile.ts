@@ -39,7 +39,7 @@ const infoActionData = [
 		text: "Выйти",
 		danger: true,
 		events: {
-			click: async (e) => {
+			click: async (e: Event) => {
 				e.preventDefault();
 				UserController.logout();
 			},
@@ -122,13 +122,13 @@ export class Profile extends Component<Props> {
 		this.children.avatar.setProps({
 			events: {
 				click: () => {
-					self.children.modal.setProps({
+					self.children?.modal.setProps({
 						isOpen: true,
-						onSubmit: async (data, e) => {
+						onSubmit: async (_data: object, e: Event) => {
 							try {
-								const formData = new FormData(e.target);
+								const formData = new FormData(e.target as HTMLFormElement);
 								await UserController.changeAvatar(formData);
-								self.children.modal.setProps({
+								self.children?.modal.setProps({
 									isOpen: false,
 								});
 							} catch (err) {

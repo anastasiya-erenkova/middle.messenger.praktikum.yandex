@@ -31,7 +31,7 @@ const getFields = () =>
 				label: labels[key],
 				name: key,
 				value: globalStore.user?.[key] ?? "",
-				type: types[key] ?? "",
+				type: key === "phone" || key === "email" ? types[key] : "",
 			})
 	);
 

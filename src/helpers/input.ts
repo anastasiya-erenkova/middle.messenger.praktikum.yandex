@@ -12,6 +12,11 @@ export enum FIELD_NAME {
 	newPassword = "newPassword",
 }
 
+export interface FormElements extends HTMLFormControlsCollection {
+	password: HTMLInputElement;
+	newPassword: HTMLInputElement;
+}
+
 const REGEX = {
 	name: "^[A-ZА-Я]+[a-zа-я\\-]+$",
 	login: "^(?=.*[A-Za-z])+[A-Za-z\\d\\-\\_]{3,20}$",
@@ -72,10 +77,9 @@ const FIELD_PATTERNS = {
 export function checkValidation(
 	name: InputProps["name"],
 	value: InputProps["value"],
-	elements?: HTMLFormElement["elements"]
+	elements?: FormElements
 ) {
 	if (name === FIELD_NAME.repeatPassword && elements) {
-		// @TODO исправить типизацию
 		const compareValue = Object.prototype.hasOwnProperty.call(
 			elements,
 			FIELD_NAME.password
@@ -86,7 +90,7 @@ export function checkValidation(
 	}
 
 	return Object.prototype.hasOwnProperty.call(FIELD_PATTERNS, name)
-		? !!value?.match(FIELD_PATTERNS[name as string].regex)
+		? !!value?.match(FIELD_PATTERNS[name as keyof typeof FIELD_PATTERNS].regex)
 		: true;
 }
 
@@ -95,5 +99,5 @@ export function getErrorText(name: FIELD_NAME) {
 		return "Пароли не совпадают";
 	}
 
-	return FIELD_PATTERNS[name].errorText;
+	return FIELD_PATTERNS[name as keyof typeof FIELD_PATTERNS].errorText;
 }

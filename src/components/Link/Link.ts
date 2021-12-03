@@ -11,9 +11,9 @@ export interface Props extends Partial<HTMLAnchorElement>, ComponentProps {
 }
 
 const events = {
-	click: (e) => {
+	click: (e: Event) => {
 		e.preventDefault();
-		goTo(e.currentTarget.pathname);
+		goTo((e.currentTarget as HTMLAnchorElement).pathname);
 	},
 };
 
