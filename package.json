@@ -41,7 +41,6 @@
     "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-typescript": "3.0.0",
-    "html-loader": "3.0.1",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "jsdom": "18.1.1",
