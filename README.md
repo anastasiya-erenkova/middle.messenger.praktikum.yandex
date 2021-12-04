@@ -1,6 +1,6 @@
 ## Pull requests
 
-[Sprint 3](https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex/pull/3)
+[Sprint 3](https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex/pull/4)
 
 ## Команды для разработки
 
