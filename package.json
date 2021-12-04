@@ -15,6 +15,11 @@
     "prettier": "prettier --w src/**/*.{scss,ts}",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex.git"
@@ -42,6 +47,7 @@
     "eslint-config-typescript": "3.0.0",
     "html-loader": "3.0.1",
     "html-webpack-plugin": "5.5.0",
+    "husky": "7.0.4",
     "jsdom": "18.1.1",
     "jsdom-global": "3.0.2",
     "mini-css-extract-plugin": "2.4.5",
