@@ -11,9 +11,9 @@
     "build": "npm run lint && npm run build:webpack",
     "build:webpack": "webpack",
     "lint": "npm run eslint && npm run stylelint",
-    "eslint": "eslint src/**/*.{js,ts}",
+    "eslint": "eslint src/**/*.{js,ts,pug}",
     "stylelint": "stylelint **/*.scss",
-    "prettier": "prettier --w src/**/*.{scss,ts}",
+    "prettier": "prettier --w src/**/*.{scss,ts,pug}",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha"
   },
   "repository": {
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/anastasiya-erenkova/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "@prettier/plugin-pug": "1.18.0",
     "@types/chai": "4.2.22",
     "@types/jsdom-global": "3.0.2",
     "@types/mocha": "9.0.0",
@@ -41,6 +42,7 @@
     "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-typescript": "3.0.0",
+    "eslint-plugin-pug": "1.2.4",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "jsdom": "18.1.1",

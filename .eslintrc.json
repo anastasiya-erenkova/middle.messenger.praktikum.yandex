@@ -1,7 +1,7 @@
 {
   "extends": ["eslint:recommended", "eslint-config-prettier", "eslint-config-typescript"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "pug"],
   "env": {
     "browser": true,
     "node": true,
