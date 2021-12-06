@@ -18,7 +18,7 @@
 ## Ссылки
 
 - [Макет в Figma](<https://www.figma.com/file/nFQKEa7kf3BoOgIoV8VUcK/Chat-(Copy)?node-id=0%3A1>)
-- [Deploy](https://messenger-erenkova.herokuapp.com/)
+- [Heroku](https://messenger-erenkova.herokuapp.com/)
 
 ## Используемые технологии
 
