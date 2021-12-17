@@ -1,21 +1,20 @@
-.chat(class=activeChat ? "" : 'empty')
+.chat(class=activeChat ? "" : "empty")
+	if activeChat
+		.chat__header
+			.chat__avatar(data-component="avatar")
+			h3.chat__title #{ activeChat.title }
 
-  if activeChat
-    .chat__header
-      .chat__avatar(data-component='avatar')
-      h3.chat__title #{activeChat.title}
+		.chat__messages
+			if messages
+				each message in messages
+					.chat-message(class=message.user_id === ownerUserId ? "chat-message--owner" : "")
+						p.chat-message__content #{ message.content }
+						// @TODO переделать изменение формата
+						p.chat-message__time #{ message.time.replace('-', '.').replace('-', '.').replace('T', ' ').slice(0, -9) }
 
-    .chat__messages
-      if messages
-        each message in messages
-          .chat-message(class=message.user_id===ownerUserId ? 'chat-message--owner' : '')
-            p.chat-message__content #{message.content}
-            // @TODO переделать изменение формата
-            p.chat-message__time #{message.time.replace('-', '.').replace('-', '.').replace('T', ' ').slice(0, -9)} 
+		form.chat__footer
+			input.chat__input(type="text", name="message", placeholder="Сообщение")
+			button.chat__submit(type="submit")
 
-    form.chat__footer
-      input.chat__input(type="text" name="message" placeholder="Сообщение")
-      button.chat__submit(type="submit")
-
-  else
-    p Выберите чат чтобы отправить сообщение
+	else
+		p Выберите чат чтобы отправить сообщение

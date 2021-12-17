@@ -1,3 +1,4 @@
+import { Chat } from "../../api/chats-api";
 import { globalStore, storeInstance } from "../../store";
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
@@ -5,10 +6,12 @@ import { Avatar, Props as AvatarProps } from "../Avatar";
 import compileTemplate from "./ChatItem.pug";
 import "./ChatItem.scss";
 
-export interface Props extends Partial<HTMLDivElement>, ComponentProps {
+export interface Props
+	extends Omit<Partial<HTMLDivElement>, "id">,
+		ComponentProps {
 	avatarUrl?: AvatarProps["url"];
 	title: string;
-	id: string;
+	id: number;
 	content: string;
 	time: string;
 	unreadCount?: number;
@@ -30,7 +33,7 @@ export class ChatItem extends Component<Props> {
 					storeInstance.setStore("activeChatId", this.props.id);
 					storeInstance.setStore(
 						"activeChat",
-						globalStore.chats.find((chat) => chat.id === this.props.id)
+						globalStore.chats.find((chat: Chat) => chat.id === this.props.id)
 					);
 				},
 			},

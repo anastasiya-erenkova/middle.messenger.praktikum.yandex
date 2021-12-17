@@ -1,7 +1,12 @@
 import { Component, ComponentProps } from "../../utils/component";
 import { parserDOM } from "../../utils/parserDOM";
 import { getFormData } from "../../helpers/getFormData";
-import { checkValidation, getErrorText, FIELD_NAME } from "../../helpers/input";
+import {
+	checkValidation,
+	getErrorText,
+	FIELD_NAME,
+	FormElements,
+} from "../../helpers/input";
 
 import { Button } from "../Button";
 import { Link } from "../Link";
@@ -17,7 +22,7 @@ interface Props extends Partial<HTMLFormElement>, ComponentProps {
 	buttonText: string;
 	fields: Input[];
 	link?: Link;
-	onSubmit: (formData: FormData) => void;
+	onSubmit: (data: object, e?: Event) => void;
 }
 
 export class Card extends Component<Props> {
@@ -27,7 +32,11 @@ export class Card extends Component<Props> {
 				e.preventDefault();
 				props.fields.forEach((field) => {
 					// @TODO Исправить типизацию
-					checkValidation(field.props.name, field.props.value, e.target?.elements);
+					checkValidation(
+						field.props.name,
+						field.props.value,
+						(e.target as HTMLFormElement)?.elements as FormElements
+					);
 				});
 
 				if (props.fields.every((element) => !element.props.invalid)) {
@@ -67,7 +76,7 @@ export class Card extends Component<Props> {
 							const isValid = checkValidation(
 								(e.target as HTMLInputElement).name,
 								(e.target as HTMLInputElement).value,
-								(e.target as HTMLInputElement).form?.elements
+								(e.target as HTMLInputElement).form?.elements as FormElements
 							);
 
 							field.setProps({

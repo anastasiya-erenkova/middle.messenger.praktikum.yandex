@@ -1,6 +1,13 @@
 label.input
-  input.input__field(placeholder=" " name=name value=value type=type accept=accept invalid=invalid ) 
-  span.input__label #{label}
-  
-  if errorText 
-    span.input__error #{errorText}
+	input.input__field(
+		placeholder=" ",
+		name=name,
+		value=value,
+		type=type,
+		accept=accept,
+		invalid=invalid
+	) 
+	span.input__label #{ label }
+
+	if errorText
+		span.input__error #{ errorText }

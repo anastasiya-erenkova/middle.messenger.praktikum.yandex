@@ -13,7 +13,7 @@ import compileTemplate from "./ChatList.pug";
 import "./ChatList.scss";
 
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
-	chats: ChatItem[];
+	chats?: ChatItem[];
 }
 
 const getChats = (data: Chat[]) => data.map((chat) => new ChatItem(chat));
@@ -69,12 +69,12 @@ export class ChatList extends Component<Props> {
 		this.children.addButton.setProps({
 			events: {
 				click: () => {
-					self.children.modal.setProps({
+					self.children?.modal.setProps({
 						isOpen: true,
-						onSubmit: async (data: FormData) => {
+						onSubmit: async (data: { title: string }) => {
 							try {
 								await ChatsController.create(data.title);
-								self.children.modal.setProps({
+								self.children?.modal.setProps({
 									isOpen: false,
 								});
 								await ChatsController.fetch();

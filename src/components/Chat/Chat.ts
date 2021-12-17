@@ -9,8 +9,10 @@ import compileTemplate from "./Chat.pug";
 import "./Chat.scss";
 import { createSocket } from "../../utils/socket";
 import { ChatsController } from "../../controllers/chats-controller";
+import { User } from "../../controllers/user-controller";
 
 interface Message {
+	id: number;
 	time: string;
 	content: string;
 	isOwner?: boolean;
@@ -19,14 +21,15 @@ interface Message {
 export interface Props extends Partial<HTMLDivElement>, ComponentProps {
 	activeChatId?: ChatItemProps["id"];
 	activeChat?: ChatItem;
-	messages: Message[];
+	messages?: Message[];
+	ownerUserId?: User["id"];
 }
 
-const mergeData = (oldData, newData) => {
+const mergeData = (oldData: Message[], newData: Message[]) => {
 	const result = oldData;
 
 	newData.forEach((item) => {
-		const similarItemIndex = oldData.findIndex((m) => m.id === item.id);
+		const similarItemIndex = oldData.findIndex((m: Message) => m.id === item.id);
 
 		if (similarItemIndex > -1) {
 			result[similarItemIndex] = item;
@@ -38,7 +41,8 @@ const mergeData = (oldData, newData) => {
 	return result;
 };
 
-const sortByTime = (a, b) => new Date(a.time) - new Date(b.time);
+const sortByTime = (a: Message, b: Message) =>
+	new Date(a.time).valueOf() - new Date(b.time).valueOf();
 
 const createChatSocket = async () => {
 	if (globalStore.user && globalStore.activeChatId) {
@@ -126,7 +130,9 @@ export class Chat extends Component<Props> {
 	async componentDidUpdate() {
 		if (this.sockets && !this.sockets[globalStore.activeChatId]) {
 			this.sockets[globalStore.activeChatId] = await createChatSocket();
+			return true;
 		}
+		return false;
 	}
 
 	render() {

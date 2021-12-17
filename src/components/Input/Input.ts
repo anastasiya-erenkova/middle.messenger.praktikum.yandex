@@ -5,6 +5,7 @@ import "./Input.scss";
 
 export interface Props extends Partial<HTMLInputElement>, ComponentProps {
 	label: string;
+	name: HTMLInputElement["name"];
 	invalid?: boolean;
 	errorText?: string | null;
 	accept?: string;

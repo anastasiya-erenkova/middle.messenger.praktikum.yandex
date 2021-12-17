@@ -4,8 +4,10 @@ type Events = {
 	[key: string]: (e: Event) => void;
 };
 
-// @TODO TS
-type Child = {
+// type Child = Component<any>;
+
+// @TODO TS: any -> Child | Child[]
+type Children = {
 	[key: string]: any;
 };
 
@@ -26,7 +28,7 @@ export abstract class Component<Props extends ComponentProps> {
 	_element: HTMLElement | null = null;
 	abstract render(): HTMLElement | null;
 
-	children?: Child | Child[] = undefined;
+	children?: Children = undefined;
 	props: Props;
 	eventBus: EventBus;
 
@@ -79,7 +81,10 @@ export abstract class Component<Props extends ComponentProps> {
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	componentDidUpdate(oldProps: Props, newProps: Props) {
+	componentDidUpdate(
+		oldProps: Props,
+		newProps: Props
+	): boolean | Promise<boolean> {
 		return oldProps !== newProps;
 	}
 

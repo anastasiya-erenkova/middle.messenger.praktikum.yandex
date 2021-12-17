@@ -36,7 +36,7 @@ export class UserController {
 		}
 	}
 
-	public static async editProfile(data: FormData) {
+	public static async editProfile(data: object) {
 		const response = await UserAPI.editProfile(data);
 		if (response) {
 			storeInstance.setStore("user", response);
@@ -44,7 +44,7 @@ export class UserController {
 		}
 	}
 
-	public static async editPassword(data: FormData) {
+	public static async editPassword(data: object) {
 		const response = await UserAPI.editPassword(data);
 		if (response) {
 			goToProfile();

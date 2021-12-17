@@ -1,10 +1,14 @@
-form.card(class=isModal ? 'card--modal' : '' enctype=hasFile ? 'multipart/form-data' : '')
-  .card__title(data-component='title')
-  .card__fields
-    each field in fields
-      div(data-component='fields')
+form.card(
+	class=isModal ? "card--modal" : "",
+	enctype=hasFile ? "multipart/form-data" : ""
+)
+	.card__title(data-component="title")
+	.card__fields
+		if fields
+			each field in fields
+				div(data-component="fields")
 
-  div(data-component='button')
+	div(data-component="button")
 
-  if link
-    .card__link(data-component='link')
+	if link
+		.card__link(data-component="link")

@@ -4,6 +4,11 @@ export interface Chat {
 	id: number;
 	title: string;
 	avatar: string;
+	content: string;
+	time: string;
+	unreadCount?: number;
+	active?: boolean;
+	activeChatId?: string;
 }
 
 interface ChatOptions extends Options {
